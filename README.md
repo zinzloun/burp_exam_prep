@@ -64,6 +64,19 @@ This time it worked, again the we got suggestion how to delete the user carlos, 
 <br><b>stockApi=http://127.1/%25%36%31%25%36%34%25%36%64%25%36%39%25%36%65/delete?username=carlos</b><br>
 (Don’t worry if you get a HTTP 302 error into the response, check the lab web app to verify that it is solved)
 
+### CSRF where token validation depends on request method
+In this lab we know that the CSRF token depend on the request method, so first of all, as usual, we inspect the request made to change the email address once logged in the lab:
+--img--
+We can see that the email address has changed (follow the redirect to see the final response of the server), now omitting the csrf parameter in the request we get an error:
+--img--
+Try to change the request method to use GET (right click on the request body and select <b>Change request method</b>):
+--img--
+It works even deleting the csrf parameter:
+--img--
+So now we can create our malicious payload and to be hosted on the exploit server body (change the yellow value according to your Lab ID):
+--img--
+Now click Store (1) to save the payload, then you can verify your exploit (2), then to solve the lab delivery the payload to the victim (3)
+
 
 ### SQL injection attack, querying the database type and version on MySQL and Microsoft
 The Category parameter is injectable: find the number of columns that are returned by the query:
