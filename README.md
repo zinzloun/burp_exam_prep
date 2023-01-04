@@ -43,6 +43,30 @@ Coming back to the repeater to modify the request according to the redirect:
 Here we can see that posting a request to the <b>/admin/delete</b> passing the csrf token and the username parameters permit to delete a user. Modify the request according to the information we discovered and we solve the lab (see the picture in the next page). Here there is another very insecure flow, since the csrf token is transmitted even if we are not authenticated as an admin user, of course this scenario must be mitigated through an authentication mechanism. Additional information about csrf token generation can be found at https://portswigger.net/web-security/csrf/tokens 
 <br>![img](./img/17.png)<br>
 
+### SSRF with blacklist-based input filter
+Here we have a request parameter in the body, <b>stockApi</b>, that it used to verify the articles quantity present in stock:
+<br>![img](./img/27.png)<br>
+We can try to access the localhost on the server:
+<br>![img](./img/28.png)<br>
+We can see that there are some security mechanisms to prevent the access to localhost, same happens try to use 127.0.0.1. We can eventually try the not so well-known shorthand notation <b>127.1</b><br>
+In this way we are able to bypass the security control that prevents us to access the localhost URL, and we were so lucky that the response indicates which is the URL to access the admin panel 😊
+<br>![img](./img/29.png)<br>
+Trying to access the admin URL we receive again a security exception, suggesting us that another control is in place:
+<br>![img](./img/30.png)<br>
+We can try to encode the admin string to bypass this control, a useful resource can be found at: https://book.hacktricks.xyz/pentesting-web/ssrf-server-side-request-forgery/url-format-bypass
+<br>We can try to perform an URL encoding on the admin string:
+<br>![img](./img/31.png)<br>
+And we got the following payload: <b>stockApi=http://127.1/%61%64%6d%69%6e</b> 
+<br>Again, we got the same security exception’s message, we can try to double URL-encode the string as follows:
+<br><b>stockApi=http://127.1/%25%36%31%25%36%34%25%36%64%25%36%39%25%36%65</b>
+<br>![img](./img/32.png)<br>
+This time it worked, again the we got suggestion how to delete the user carlos, that it’s actual our lab’s goal, using the following payload we can solve the lab:
+<br><b>stockApi=http://127.1/%25%36%31%25%36%34%25%36%64%25%36%39%25%36%65/delete?username=carlos</b><br>
+(Don’t worry if you get a HTTP 302 error into the response, check the lab web app to verify that it is solved)
+
+
+
+
 ### SQL injection attack, querying the database type and version on MySQL and Microsoft
 The Category parameter is injectable: find the number of columns that are returned by the query:
 ```
