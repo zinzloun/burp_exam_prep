@@ -65,8 +65,6 @@ This time it worked, again the we got suggestion how to delete the user carlos, 
 (Don’t worry if you get a HTTP 302 error into the response, check the lab web app to verify that it is solved)
 
 
-
-
 ### SQL injection attack, querying the database type and version on MySQL and Microsoft
 The Category parameter is injectable: find the number of columns that are returned by the query:
 ```
