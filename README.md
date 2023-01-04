@@ -119,3 +119,8 @@ function pwn_usr() {
 </script>
 ```
 When the password field is compiled the pwn_usr function is invoked, the function will create a new comment in the post with ID 3. Here we use the fetch JS API (https://www.w3schools.com/jsref/api_fetch.asp, remember that fetch is not supported in Internet Explorer 11 and earlier), to make the things a little bit obfuscated we will save the credentials in hidden div.
+Lets create the malicious post comment:
+<br>![img](./img/36.png)<br>
+Just waiting a minute and then visiting the comments in the post id number 3 we can verify that our exploit worked:
+<br>![img](./img/37.png)<br>
+We can retrive the administrator password in the source of the page
