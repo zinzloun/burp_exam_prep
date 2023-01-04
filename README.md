@@ -43,6 +43,19 @@ Coming back to the repeater to modify the request according to the redirect:
 Here we can see that posting a request to the <b>/admin/delete</b> passing the csrf token and the username parameters permit to delete a user. Modify the request according to the information we discovered and we solve the lab (see the picture in the next page). Here there is another very insecure flow, since the csrf token is transmitted even if we are not authenticated as an admin user, of course this scenario must be mitigated through an authentication mechanism. Additional information about csrf token generation can be found at https://portswigger.net/web-security/csrf/tokens 
 <br>![img](./img/17.png)<br>
 
+### SQL injection attack, querying the database type and version on MySQL and Microsoft
+The Category parameter is injectable: find the number of columns that are returned by the query:
+```
+?category='+order+by+1--
+```
+But we get an internal server error, let’s try using another comment escape instruction (#)
+<br>![img](./img/18.png)<br>
+We could infer that it is a MySQL DB and that the query returns 2 columns, looking at the page we can also infer that at least one column is textual. Try the follows payload confirm that idea:
+<br>![img](./img/19.png)<br>
+Now get the DB version using the MySQL function VERSION()
+<br>![img](./img/20.png)<br>
+
+
 
 
 
