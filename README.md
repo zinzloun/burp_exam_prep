@@ -98,7 +98,7 @@ Following you can find a useful link about Postgresql system queries: https://ra
 
 ### Exploiting cross-site scripting to capture passwords
 This is actually a funny and a challenging lab. Taking advantage of a XSS stored vulnerability we have to access the blog as administrator user. We know that the comment field is injectable, lets analyze the flow:
- 
+<br>![img](./img/33.png)<br>
 
 First of all I thought to use the classic approach: stealing authentication cookie
 
