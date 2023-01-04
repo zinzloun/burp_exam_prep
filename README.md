@@ -68,13 +68,13 @@ This time it worked, again the we got suggestion how to delete the user carlos, 
 In this lab we know that the CSRF token depend on the request method, so first of all, as usual, we inspect the request made to change the email address once logged in the lab:
 <br>![img](./img/38.png)<br>
 We can see that the email address has changed (follow the redirect to see the final response of the server), now omitting the csrf parameter in the request we get an error:
---img--
+<br>![img](./img/39.png)<br>
 Try to change the request method to use GET (right click on the request body and select <b>Change request method</b>):
---img--
+<br>![img](./img/40.png)<br>
 It works even deleting the csrf parameter:
---img--
+<br>![img](./img/41.png)<br>
 So now we can create our malicious payload and to be hosted on the exploit server body (change the yellow value according to your Lab ID):
---img--
+<br>![img](./img/42.png)<br>
 Now click Store (1) to save the payload, then you can verify your exploit (2), then to solve the lab delivery the payload to the victim (3)
 
 
