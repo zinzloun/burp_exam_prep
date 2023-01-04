@@ -137,3 +137,6 @@ Lets create the malicious post comment:
 Just waiting a minute and then visiting the comments in the post id number 3 we can verify that our exploit worked:
 <br>![img](./img/37.png)<br>
 We can retrive the administrator password in the source of the page
+
+### Blind XXE with out-of-band interaction via XML parameter entities
+<br>![img](./img/43.png)<br>
