@@ -96,6 +96,9 @@ Now we can get all the entries for the user tables as follows:
 <br>![img](./img/26.png)<br>
 Following you can find a useful link about Postgresql system queries: https://razorsql.com/articles/postgresql_system_queries.html 
 
+### Exploiting cross-site scripting to capture passwords
+This is actually a funny and a challenging lab. Taking advantage of a XSS stored vulnerability we have to access the blog as administrator user. We know that the comment field is injectable, lets analyze the flow:
+ 
 
-
+First of all I thought to use the classic approach: stealing authentication cookie
 
