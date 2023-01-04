@@ -66,7 +66,7 @@ This time it worked, again the we got suggestion how to delete the user carlos, 
 
 ### CSRF where token validation depends on request method
 In this lab we know that the CSRF token depend on the request method, so first of all, as usual, we inspect the request made to change the email address once logged in the lab:
---img--
+<br>![img](./img/38.png)<br>
 We can see that the email address has changed (follow the redirect to see the final response of the server), now omitting the csrf parameter in the request we get an error:
 --img--
 Try to change the request method to use GET (right click on the request body and select <b>Change request method</b>):
