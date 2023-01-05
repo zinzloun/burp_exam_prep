@@ -139,4 +139,9 @@ Just waiting a minute and then visiting the comments in the post id number 3 we 
 We can retrive the administrator password in the source of the page
 
 ### Blind XXE with out-of-band interaction via XML parameter entities
-<br>![img](./img/43.png)<br>
+In this lab the application does not return the values of any defined external entities in its responses, and so direct retrieval of server-side data is not possible as shown below:
+<br>![img](./img/44.png)<br>
+Then we have to proceed performing a blind out-of-band injection using XML parameter entities (more information: https://portswigger.net/web-security/xxe/blind). Using the following payload we can solve the lab:
+<br>![img](./img/46.png)<br>
+Since I use the Community version I cannot take advantage of the Collaborator feature to obtain a valid subdomain, but we can refer to the domain <b>burpcollaborator.net</b> as our XML parameter value, even if we won't see the requests arriving to the server (DNS and HTTP), the lab is solved anyway.
+Note that even if the we get an error into the response the call to the collaborator site is performed.
