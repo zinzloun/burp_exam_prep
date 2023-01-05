@@ -166,7 +166,7 @@ Then inspecting the exploit LAB server access log we get the value of the hostna
 <br>![img](./img/50.png)<br>
 
 ### Lab: Multistep clickjacking
-The goal of this lab is to trick a victim to delete her account, while performing another action on the decoy web site (the exploit website). This time I had to follow the provided solution since, honestly I did not know this vulnerability before, but hey, we are here to learn :).
+The goal of this lab is to trick a victim to delete her account, while performing another action on the decoy web site (the exploit website). This time I had to follow the provided solution since, honestly I did not know this vulnerability before, but hey, we are here to learn 😊.
 <br>Following there is the payload I used, I had to adjust the <i>top and left</i> values for both the div to properly overlay the delete button and the confirmation button.<br>
 ```
 <style>
