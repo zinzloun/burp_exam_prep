@@ -145,3 +145,8 @@ Then we have to proceed performing a blind out-of-band injection using XML param
 <br>![img](./img/46.png)<br>
 Since I use the Community version I cannot take advantage of the Collaborator feature to obtain a valid subdomain, but we can refer to the domain <b>burpcollaborator.net</b> as our XML parameter value, even if we won't see the requests arriving to the server (DNS and HTTP), the lab is solved anyway.
 Note that even if the we get an error into the response the call to the collaborator site is performed.
+
+### Exploiting blind XXE to exfiltrate data using a malicious external DTD
+ This lab has a "Check stock" feature that parses XML input but does not display the result, to solve the lab, exfiltrate the contents of the /etc/hostname file. 
+ Trying a classic XXE injection confirm that we have to perform a blind XXE:
+ 
