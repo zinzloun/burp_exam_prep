@@ -27,7 +27,7 @@ https://YOUR-LABID.web-security-academy.net/oauth-callback?code=T2QW7SXUMEHWY_bp
 In order to solve the lab, we need to find an open redirect (https://portswigger.net/kb/issues/00500100_open-redirection-reflected) affecting the application to exploit the SSRF vulnerability.
 First we can try to access the admin panel passing the URL into the body parameter, but it didn't work since a security check is in place:
 <br>![img](./img/51.png)<br>
-Clicking the Next product link (bottom-right in the page) we can notice that an open redirection is present (1), as reported into the server response (2)
+Clicking the <b>Next product</b> link (bottom-right in the web page) we can notice that an open redirection is present (1), as reported into the server response (2)
 <br>![img](./img/52.png)<br>
 As confirmation we can try to inject the query string parameter using the value highlighted:
 <br>![img](./img/53.png)<br>
