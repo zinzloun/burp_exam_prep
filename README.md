@@ -26,7 +26,7 @@ https://YOUR-LABID.web-security-academy.net/oauth-callback?code=T2QW7SXUMEHWY_bp
 ### SSRF with filter bypass via open redirection vulnerability
 In order to solve the lab, we need to find an open redirect affecting the application to exploit the SSRF vulnerability.
 First we can try to access the admin panel passing the URL into the body parameter:
--- 51 --
+<br>![img](./img/51.png)<br>
 Clicking the Next product link (bottom-right in the page) we can notice that an open redirection is present (1), as reported into the server response (2)
 -- 52 --
 As confirmation we can try to inject the query string parameter using the value highlighted:
