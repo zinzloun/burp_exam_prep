@@ -23,6 +23,22 @@ After delivered to the victim the payload, we can inspect the exploit access log
 Now we can use the code to access the portal bypassing the authentication process:
 https://YOUR-LABID.web-security-academy.net/oauth-callback?code=T2QW7SXUMEHWY_bpSSTnNucJRfhWhQRtbj2GQpqAINC
 
+### SSRF with filter bypass via open redirection vulnerability
+In order to solve the lab, we need to find an open redirect affecting the application to exploit the SSRF vulnerability.
+First we can try to access the admin panel passing the URL into the body parameter:
+-- 51 --
+Clicking the Next product link (bottom-right in the page) we can notice that an open redirection is present (1), as reported into the server response (2)
+-- 52 --
+As confirmation we can try to inject the query string parameter using the value highlighted:
+-- 53 --
+Now we can proceed to exploit SSRF vulnerability providing the relative path with the QS parameter, to access the adim panel, into the stockApi parameter (1):<br>
+<b>/product/nextProduct?path=http://192.168.0.12:8080/admin</b>. In the response we can find the URL to delete Carlos
+-- 54 --
+And to solve the lab you can set the following payload:
+```
+stockApi=/product/nextProduct?path=http://192.168.0.12:8080/admin/delete?username=carlos
+```
+
 ### SSRF via flawed request parsing
 In this lab we can take advantage of host header injection, just to recall what is the purpose of this header: https://www.rfc-editor.org/rfc/rfc7230#section-5.4
 <br>First let’s try to modify the host value, we can notice that the request is blocked
