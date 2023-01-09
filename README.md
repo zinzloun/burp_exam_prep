@@ -24,16 +24,16 @@ Now we can use the code to access the portal bypassing the authentication proces
 https://YOUR-LABID.web-security-academy.net/oauth-callback?code=T2QW7SXUMEHWY_bpSSTnNucJRfhWhQRtbj2GQpqAINC
 
 ### SSRF with filter bypass via open redirection vulnerability
-In order to solve the lab, we need to find an open redirect affecting the application to exploit the SSRF vulnerability.
+In order to solve the lab, we need to find an open redirect (https://portswigger.net/kb/issues/00500100_open-redirection-reflected) affecting the application to exploit the SSRF vulnerability.
 First we can try to access the admin panel passing the URL into the body parameter:
 <br>![img](./img/51.png)<br>
 Clicking the Next product link (bottom-right in the page) we can notice that an open redirection is present (1), as reported into the server response (2)
--- 52 --
+<br>![img](./img/52.png)<br>
 As confirmation we can try to inject the query string parameter using the value highlighted:
--- 53 --
+<br>![img](./img/53.png)<br>
 Now we can proceed to exploit SSRF vulnerability providing the relative path with the QS parameter, to access the adim panel, into the stockApi parameter (1):<br>
 <b>/product/nextProduct?path=http://192.168.0.12:8080/admin</b>. In the response we can find the URL to delete Carlos
--- 54 --
+<br>![img](./img/54.png)<br>
 And to solve the lab you can set the following payload:
 ```
 stockApi=/product/nextProduct?path=http://192.168.0.12:8080/admin/delete?username=carlos
