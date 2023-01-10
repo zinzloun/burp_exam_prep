@@ -215,3 +215,16 @@ This is a challenging LAB, at least for me, since I had problem to understand ho
 We have the following information:
 1. This website has an insecure CORS configuration in that it trusts all subdomains 
 1. The trust relation is not protocol aware
+
+To solve the lab we have to get the administrator's API key expolit CORS vulnerability using Javascript, so we can infer that we need to implement some asynchronous mechanism.<br>
+First of we have to find the insecure CORS configuration, inspecting the history in Burp proxy we can see that a response to the <b>accountDetails request</b> is in a JSON format, moreover we can notice that in the response the <b>Access-Control-Allow-Credentials</b> is set, that suggests that an asynchronous request could be in place.
+-- 55 --
+Lets try to test the CORS security context adding the <b>origin</b> header to the request:
+ 
+
+References:
++ https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Mode
++ https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Site
+
+
+
