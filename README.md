@@ -228,7 +228,8 @@ So we know that we can issue cross-site request from a subdomain. Now we have to
 -- 57 --
 From the above image we can see that a call to the <b>stock subdomain</b> is performed to check the stock amount, then sending the request to the Repeater we can try to verify if the QS parameter are injectable:
 -- 58 --
-So the productId parameter is prone to XSS, we can take advantages of this vulnerability to exploit the CORS security lack
+So the productId parameter is prone to XSS attacks, we can take advantages of this vulnerability to exploit the CORS security lack. First of all we will test if we are able to get the account details information for the current user from the vulnerable stock web page hosted in the lab subdomain. We will delivery the following payload to try to get the account details for our current logged user (we must use credentials: 'include' in the fetch request to pass the credentials).
+-- 59 --
 
 
 
@@ -236,5 +237,5 @@ References:
 + https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Mode
 + https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Site
 + https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin
-
++ https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
