@@ -220,7 +220,7 @@ To solve the lab we have to get the administrator's API key, expoliting CORS vul
 First of we have to find the insecure CORS configuration, inspecting the history in Burp proxy we can see that a response to the <b>accountDetails request</b> is in a JSON format, moreover we can notice that in the response the <b>Access-Control-Allow-Credentials</b> is set, that suggests that an asynchronous request could be in place.
 <br>![img](./img/55.png)<br>
 Lets try to test the CORS security context adding the <b>origin</b> header to the request, if we get back the origin value in the <b>Access-Control-Allow-Origin</b> it means that the response can be shared with requesting code from the given origin. The use cases tested are the following:
-+ Origin: null -> fails: Access-Control-Allow-Origin is returned
++ Origin: null -> fails: Access-Control-Allow-Origin is not returned
 + Origin: https://www.google.it -> fails as above
 + Origin: https://test.LAB-ID..web-security-academy.net -> <b>OK</b>: the value is reflected into Access-Control-Allow-Origin response header
 <br>![img](./img/56.png)<br>
