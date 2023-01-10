@@ -209,3 +209,9 @@ The goal of this lab is to trick a victim to delete her account, while performin
 <iframe src="https://0aa0009e039547a5c5c92d6400820028.web-security-academy.net/my-account"></iframe>
 ```
 Reference: https://portswigger.net/web-security/clickjacking
+
+### CORS vulnerability with trusted insecure protocols
+This is a challenging LAB, at least for me, since I had problem to understand how CORS related concepts work clearly.<br>
+We have the following information:
+1. This website has an insecure CORS configuration in that it trusts all subdomains 
+1. The trust relation is not protocol aware
