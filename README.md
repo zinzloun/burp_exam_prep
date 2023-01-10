@@ -216,7 +216,7 @@ We have the following information:
 1. This website has an insecure CORS configuration that trusts all subdomains 
 1. The trust relation is not protocol aware
 
-To solve the lab we have to get the administrator's API key expolit CORS vulnerability using Javascript, so we can infer that we need to implement some asynchronous mechanism.<br>
+To solve the lab we have to get the administrator's API key, expoliting CORS vulnerability using Javascript, so we can infer that we need to implement some asynchronous mechanism.<br>
 First of we have to find the insecure CORS configuration, inspecting the history in Burp proxy we can see that a response to the <b>accountDetails request</b> is in a JSON format, moreover we can notice that in the response the <b>Access-Control-Allow-Credentials</b> is set, that suggests that an asynchronous request could be in place.
 <br>![img](./img/55.png)<br>
 Lets try to test the CORS security context adding the <b>origin</b> header to the request, if we get back the origin value in the <b>Access-Control-Allow-Origin</b> it means that the response can be shared with requesting code from the given origin. The use cases tested are the following:
