@@ -227,7 +227,8 @@ Lets try to test the CORS security context adding the <b>origin</b> header to th
 So we know that we can issue cross-site request from a subdomain. Now we have to find a vulnerability to be exploited through a valid sunbdomain, again lets inspect the Burp history while we navigate the lab. 
 -- 57 --
 From the above image we can see that a call to the <b>stock subdomain</b> is performed to check the stock amount, then sending the request to the Repeater we can try to verify if the QS parameter are injectable:
-
+-- 58 --
+So the productId parameter is prone to XSS, we can take advantages of this vulnerability to exploit the CORS security lack
 
 
 
