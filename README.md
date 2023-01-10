@@ -213,7 +213,7 @@ Reference: https://portswigger.net/web-security/clickjacking
 ### CORS vulnerability with trusted insecure protocols
 This is a challenging LAB, at least for me, since I had problem to understand how CORS related concepts work clearly.<br>
 We have the following information:
-1. This website has an insecure CORS configuration in that it trusts all subdomains 
+1. This website has an insecure CORS configuration that trusts all subdomains 
 1. The trust relation is not protocol aware
 
 To solve the lab we have to get the administrator's API key expolit CORS vulnerability using Javascript, so we can infer that we need to implement some asynchronous mechanism.<br>
