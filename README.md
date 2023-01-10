@@ -223,7 +223,8 @@ Lets try to test the CORS security context adding the <b>origin</b> header to th
 + Origin: null -> fails: Access-Control-Allow-Origin is returned
 + Origin: https://www.google.it -> fails as above
 + Origin: https://test.LAB-ID..web-security-academy.net -> <b>OK</b>: the value is reflected into Access-Control-Allow-Origin response header
--- 56 --
+<br>![img](./img/56.png)<br>
+
 So we know that we can issue cross-site request from a subdomain. Now we have to find a vulnerability to be exploited through a valid sunbdomain, again lets inspect the Burp history while we navigate the lab. 
 -- 57 --
 From the above image we can see that a call to the <b>stock subdomain</b> is performed to check the stock amount, then sending the request to the Repeater we can try to verify if the QS parameter are injectable:
