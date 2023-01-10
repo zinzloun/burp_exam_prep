@@ -230,7 +230,7 @@ From the above image we can see that a call to the <b>stock subdomain</b> is per
 -- 58 --
 So the productId parameter is prone to XSS attacks, we can take advantages of this vulnerability to exploit the CORS security lack. First of all we will test if we are able to get the account details information for the current user from the vulnerable stock web page hosted in the lab subdomain. We will delivery the following payload to try to get the account details for our current logged user (we must use credentials: 'include' in the fetch request to pass the credentials).
 -- 59 --
-
+Further we can see the response in the browser (right click in request section in the Repeater)
 
 
 References:
