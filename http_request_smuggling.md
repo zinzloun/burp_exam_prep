@@ -78,6 +78,7 @@ Then the above two lines of the request should be treated by the back-end server
 Following the redirect:
 <br>![img](./img/67.png)<br>
 
+Now that we have found the desync vulnerability we need to find the reflected vulnerability.
 
 
 
