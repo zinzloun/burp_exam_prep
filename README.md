@@ -35,3 +35,4 @@ Enjoy your learning trip!
 ### File upload
 + [Web shell upload via extension blacklist bypass](./file_upload.md#web-shell-upload-via-extension-blacklist-bypass)
 ### HTTP request smuggling
++ [HTTP request smuggling](./http_request_smuggling.md#http-request-smuggling)
