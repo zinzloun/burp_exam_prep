@@ -69,8 +69,10 @@ Foo: x
 ```
 Copy and paste the request into Reapeter, morover I modified the GET as follows:
 ```
-
+GET /invalid_URL HTTP/1.1
+Foo: x
 ```
+Then the above two lines of the request should be treated by the back-end server as belonging to the next valid request that is received. Since this request contains an invalid URL, the server will respond with status code 404, indicating that the attack request did indeed interfere with it. 
     
 
 
