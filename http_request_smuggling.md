@@ -12,9 +12,10 @@ If the front-end and back-end servers behave differently in relation to the (pos
 In the lab the front-end server doesn't support chunked encoding. The application is also vulnerable to reflected XSS via the User-Agent header.
 To solve the lab, smuggle a request to the back-end server that causes the next user's request to receive a response containing an XSS exploit that executes <b>alert(1)</b><br><i>Note: you must have HTTP Request Smuggler extention installed in Burp</i>
 #### Steps
+<i>Note 2: my lab ID will change during the following steps, so you could find some discrepancies between images and the source code</i>
 First we need to verify if the application is vulnerable to HTTP request smuggling (AKA desync attack), so lets proceed to analyze the request for a comment subsmission. 
 First verify that the HTPP request smuggler extension is installed: click to Extension (1), then verify that the Smuggler is listed (2), eventually go BApp Store (3) and proceed to the installation. I suggest to set the Output (4) to Save to a file
--- 64 --
+<br>![img](./img/64.png)<br>
 In the output we will get the report with the results of the externsion's execution.
 
 Now lets proceed to use the HTTP Request Smuggler, to do that right-click into the Request body and choose Smuggle probe (click Ok in the configuration windows that appears, if you don't see the OK button just hit enter):
