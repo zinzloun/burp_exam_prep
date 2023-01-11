@@ -17,6 +17,16 @@ Enjoy your learning trip!
 + [Vulnerability with trusted insecure protocols](./CORS.md#cors-vulnerability-with-trusted-insecure-protocols)
 ### CSRF, XSS
 + [CSRF when token validation depends on request method](./CSRF-XXS.md#csrf-where-token-validation-depends-on-request-method)
-+ [Exploiting cross-site scripting to capture passwords]
-
-
++ [Exploiting cross-site scripting to capture passwords](./CSRF-XXS.md#exploiting-cross-site-scripting-to-capture-passwords)
+### SSRF
++ [SSRF with filter bypass via open redirection vulnerability](./SSRF.md#ssrf-with-filter-bypass-via-open-redirection-vulnerability)
++ [SSRF via flawed request parsing](./SSRF.md#ssrf-via-flawed-request-parsing)
++ [SSRF with blacklist-based input filter](./SSRF.md#ssrf-with-blacklist-based-input-filter)
+### SQLi
++ [SQL injection attack, querying the database type and version on MySQL and Microsoft](./SqlI.md#sql-injection-attack-querying-the-database-type-and-version-on-mysql-and-microsoft)
++ [SQL injection attack, listing the database contents on non-Oracle databases](./SqlI.md#sql-injection-attack-listing-the-database-contents-on-non-oracle-databases)
+### XXE
++ [Blind XXE with out-of-band interaction via XML parameter entities](./XXE.md#blind-xxe-with-out-of-band-interaction-via-xml-parameter-entities)
++ [Exploiting blind XXE to exfiltrate data using a malicious external DTD](./XXE.md#exploiting-blind-xxe-to-exfiltrate-data-using-a-malicious-external-dtd)
+### Authentication && Authorization
++ [OAuth account hijacking via redirect_uri](./authorization_authentication.md#oauth-account-hijacking-via-redirect_uri)
