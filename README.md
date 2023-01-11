@@ -12,7 +12,11 @@ If you have any questions, suggestions or just to say hallo you can drop me an e
 
 Enjoy your learning trip!
 
-
+## Summary
+### Cors
++ [vulnerability-with-trusted-insecure-protocols](./CORS.md#cors-vulnerability-with-trusted-insecure-protocols)
+### CSRF, XSS
++ [csrf-where-token-validation-depends-on-request-method](./CSRF-XXS.md#csrf-where-token-validation-depends-on-request-method)
 
 
 
