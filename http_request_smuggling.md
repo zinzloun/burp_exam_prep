@@ -19,7 +19,7 @@ First verify that the HTPP request smuggler extension is installed: click to Ext
 In the output we will get the report with the results of the externsion's execution.
 
 Now lets proceed to use the HTTP Request Smuggler, to do that right-click into the Request body and choose Smuggle probe (click Ok in the configuration windows that appears, if you don't see the OK button just hit enter):
--- 65 --
+<br>![img](./img/65.png)<br>
 Wait a couple of minute (or tail the file) to get the result that indicates that the application could be prone to CL-TE desyn vulnerability:
 ```
 Updating active thread pool size to 8
@@ -74,9 +74,10 @@ GET /invalid_URL HTTP/1.1
 Foo: x
 ```
 Then the above two lines of the request should be treated by the back-end server as belonging to the next valid request that is received. Since this request contains an invalid URL, the server will respond with status code 404, indicating that the attack request did indeed interfere with it. Submitting the modified request we can notice that the server respond correctly with a redirect (1), but following the redirection (2), since our GET instruction was prepended to the subsequent request, will cause a 404 error trying to reach the invalid url
--- 66 --
+<br>![img](./img/66.png)<br>
 Following the redirect:
--- 67 --
+<br>![img](./img/67.png)<br>
+
 
 
 
