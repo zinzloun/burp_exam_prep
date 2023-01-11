@@ -11,10 +11,11 @@ If the front-end and back-end servers behave differently in relation to the (pos
 #### Lab enviroment
 In the lab the front-end server doesn't support chunked encoding. The application is also vulnerable to reflected XSS via the User-Agent header.
 
-To solve the lab, smuggle a request to the back-end server that causes the next user's request to receive a response containing an XSS exploit that executes <b>alert(1)</b><br><i>Note: before proceeding be sure to have installed in Burp the HTTP Request Smuggler extesion</i> 
+To solve the lab, smuggle a request to the back-end server that causes the next user's request to receive a response containing an XSS exploit that executes <b>alert(1)</b>
 
 
 
 #### Reference
 + https://portswigger.net/web-security/request-smuggling
++ https://portswigger.net/web-security/request-smuggling/exploiting
 
