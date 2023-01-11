@@ -34,3 +34,4 @@ Enjoy your learning trip!
 + [Multistep clickjacking](https://github.com/zinzloun/burp_exam_prep/blob/main/clickjacking.md#lab-multistep-clickjacking)
 ### File upload
 + [Web shell upload via extension blacklist bypass](./file_upload.md#web-shell-upload-via-extension-blacklist-bypass)
+### HTTP request smuggling
