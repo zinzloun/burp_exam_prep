@@ -37,4 +37,4 @@ Enjoy your learning trip!
 ### HTTP request smuggling
 + [HTTP request smuggling](./http_request_smuggling.md#http-request-smuggling)
 ### Server-side template injection
-+ [Server side template injection]()
++ [Server side template injection](./ss_template_inject.md)
