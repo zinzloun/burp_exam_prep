@@ -79,14 +79,14 @@ Following the redirect:
 <br>![img](./img/67.png)<br>
 
 Now that we have found the desync vulnerability we need to find the reflected vulnerability. Inspecting the creation of new comment request we can see that the user-agent header is passes as parameter:
--- 68 --
+<br>![img](./img/68.png)<br>
 Moreover inspecting the post's comment page we can see that the value is reflected into a hidden input field
 -- 69 --
 Let's try to inject the user-agent header:
 -- 70 --
 So our JS payload is reflected, sending the request to the browser (right click on the request body, then 1, 2), copy the provided link into your browser and you get the alert pop-up into the response (eventually you could just use Show response in browser, 3)
 -- 71 --
-Finally we can combine the two vulnerability to solve the lab using the following payload:
+Finally we can combine the two vulnerability to solve the lab using the following exploit:
 ```
 POST / HTTP/1.1
 Host: 0a6200a0045c84b0c1db9e7e00630001.web-security-academy.net
