@@ -78,7 +78,15 @@ Then the above two lines of the request should be treated by the back-end server
 Following the redirect:
 <br>![img](./img/67.png)<br>
 
-Now that we have found the desync vulnerability we need to find the reflected vulnerability.
+Now that we have found the desync vulnerability we need to find the reflected vulnerability. Inspecting the creation of new comment request we can see that the user-agent header is passes as parameter:
+-- 68 --
+Moreover inspecting the post's comment page we can see that the value is reflected into a hidden input field:
+-- 69 --
+Let's try to inject the user-agent header:
+-- 70 --
+So our JS payload is reflected, sending the request to the browser (right click on the request body, then 1, 2) we get the alert pop-up.
+
+
 
 
 
