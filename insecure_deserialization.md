@@ -6,7 +6,8 @@ Insecure deserialization is when user-controllable data is deserialized by a web
 #### Lab
 This lab uses a serialization-based session mechanism. To solve the lab, edit the serialized object in the session cookie and use it to delete the morale.txt file from Carlos's home directory.<br>
 Let's proceed to deserialize the session cookies once we are logged in:
--- 77 --
+<br>![img](./img/77.png)<br>
+
 We can notice that the user data is passed serialized through the cookie session in PHP format. Furthermore if try to send some fake data we get an error:
 -- 78 --
 Now switch to the backup user, gregg, delete the account and resend the same request: we are redirected to the home page if the account does not exist anymore. Then I logged in as wiener user, I uploaded an avatar image and I deleted the account again, but this time if we submit again the request we will get an error:
@@ -22,7 +23,7 @@ O:4:"User":3:{s:8:"username";s:6:"wiener";s:12:"access_token";s:32:"j1qrlmlnwhei
 ```
 So enable the capture on the Proxy and intercept the delete request, then encode to Base64 the above paylod and set it as session cookie, then forward the request to the server:
 -- 80 --
-You should solve the Lab
+You should have solved the Lab
 
 
 
