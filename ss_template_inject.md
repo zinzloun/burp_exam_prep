@@ -7,7 +7,7 @@ Template engines are designed to generate web pages by combining fixed templates
 To solve the lab, identify the template engine and find a documented exploit online that you can use to execute arbitrary code, then delete the morale.txt file from Carlos's home directory.
 
 So let's try to find an injection point, viewing the details of the first item we can see that the message query string parameter is reflected into the page:
--- 72 --
+<br>![img](./img/72.png)<br>
 We can eventually try to test for XSS, but as we can see it is not vulnerable (at least not to a simple attack)
 -- 74 --
 anyway knowing that this is not the aim of the lab, we can move forward to test for a simple SSTI payload:
