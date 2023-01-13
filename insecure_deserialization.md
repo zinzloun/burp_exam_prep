@@ -9,8 +9,8 @@ Let's proceed to deserialize the session cookies once we are logged in:
 -- 77 --
 We can notice that the user data is passed serialized through the cookie session in PHP format. Furthermore if try to send some fake data we get an error:
 -- 78 --
-Now delete the user account and resend the same request. We will get a server error with some useful information:
- 
+Now switch to the backup user, gregg, delete account and resend the same request. We will get a server error with some useful information:
+
 
 #### References
 + https://en.wikipedia.org/wiki/PHP_serialization_format
