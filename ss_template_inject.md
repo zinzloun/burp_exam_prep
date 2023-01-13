@@ -40,7 +40,7 @@ So I ended up to code the following payload:
   {{/with}}
 {{/with}}
 ```
-Here the real exploit is the instruction:<br><b>return require('child_process').exec('id');</b><br>
+Here the real exploit is the instruction:<br><b>return require('child_process').exec('pwd');</b><br>
 That is the way to execute shell command in Node.js: https://nodejs.org/api/child_process.html<br>
 The problem with this payload is that we don't get the command ouptut into the web page, since the exec method is asynchronous and we need and handler to return the command output:
 <br>![img](./img/75.png)<br>
