@@ -30,7 +30,7 @@ Enjoy your learning trip!
 + [Exploiting blind XXE to exfiltrate data using a malicious external DTD](./XXE.md#exploiting-blind-xxe-to-exfiltrate-data-using-a-malicious-external-dtd)
 ### Authentication && Authorization
 + [OAuth account hijacking via redirect_uri](./authorization_authentication.md#oauth-account-hijacking-via-redirect_uri)
-+ [Multi-step process with no access control on one step]()
++ [Multi-step process with no access control on one step](./authorization_authentication.md#multi-step-process-with-no-access-control-on-one-step)
 ### Click-jacking
 + [Multistep clickjacking](https://github.com/zinzloun/burp_exam_prep/blob/main/clickjacking.md#lab-multistep-clickjacking)
 ### File upload
