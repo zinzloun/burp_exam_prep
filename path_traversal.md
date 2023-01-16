@@ -4,3 +4,6 @@ The lab contains a file path traversal vulnerability in the display of product i
 but the application strips path traversal sequences from the user-supplied filename before using it.
 <br>
 To solve the lab, retrieve the contents of the /etc/passwd file. 
+
+#### Reference
++ https://portswigger.net/web-security/file-path-traversal
