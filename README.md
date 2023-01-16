@@ -42,3 +42,5 @@ Enjoy your learning trip!
 + [Using application functionality to exploit insecure deserialization](./insecure_deserialization.md#using-application-functionality-to-exploit-insecure-deserialization)
 ### Path traversal
 + [File path traversal, traversal sequences stripped non-recursively](./path_traversal.md#file-path-traversal-traversal-sequences-stripped-non-recursively)
+### Flawed access control
++ [Multi-step process with no access control on one step](https://github.com/zinzloun/burp_exam_prep/blob/main/flowed_AC.md#multi-step-process-with-no-access-control-on-one-step)
