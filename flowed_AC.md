@@ -6,11 +6,11 @@ Before to promote a user as admin
 <br>![img](./img/83.png)<br>
 
 A confirmation step is required. In this step an hiddne input field is sent to validate the action as show below
--- 84 --
+<br>![img](./img/84.png)<br>
 In this scenario, since no security mechanism are implemented in the confirmation step, we can easely promote oruselves to an admin user. Let's try lo open an incognito session in the browser to login as a normal user (wiener)
--- 85 --
+<br>![img](./img/85.png)<br>
 Now in the legitim request made before by the administrator to promote carlos, we can just change the cookie session to ours (1) and the username parameter according (2):
--- 86 --
+<br>![img](./img/86.png)<br>
 Submitting the modified request we solve the lab
 
 #### References:
