@@ -44,3 +44,5 @@ Enjoy your learning trip!
 + [Using application functionality to exploit insecure deserialization](./insecure_deserialization.md#using-application-functionality-to-exploit-insecure-deserialization)
 ### Path traversal
 + [File path traversal, traversal sequences stripped non-recursively](./path_traversal.md#file-path-traversal-traversal-sequences-stripped-non-recursively)
+### Business logic vulnerabilities
++ [Insufficient workflow validation]()
