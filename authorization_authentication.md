@@ -50,6 +50,19 @@ The result is that we are not blocked, so we can try to brute-force the login us
 
 and so on. To solve this lab I used Turbo Intruder exstension, you can get more information in the reference section about this toool. I created a custom list to feed Turbo intruder based on the passwords list provided: https://portswigger.net/web-security/authentication/auth-lab-passwords, that implements the sequence schema illustrated above. You can download the customized list for Turbo Intrudere [here](./file/wl_auth.txt).
 
+Once we have intercepted a login request we can send it to Turbo Intruder, here I configured the Python payload to execute a request after another, so I set
+```
+concurrentConnections=1,
+requestperConnetction=1,
+```
+and the wordlist that I created. The payload will send a request for each line in the file, replacing the <b>%s</b>
+value with the a single payload row of the file, then if the response is not a 404 error, is added to the list results.
+<br>![img](./img/87.png)<br>
+
+Now lunch the attack, go for a coffee since it will take some time (in Burp CE using Turbo Intruder the requests are throttled). 
+
+In the result's table to find out if we succeed, we have to order the results for the state, looking for 302 responses (redirection to the account details), filter out those related to wiener, we should see a request having carlos as username, the value of the password parameter is the one that is correct.
+<br>![img](./img/88.png)<br>
 
 
 #### References:
