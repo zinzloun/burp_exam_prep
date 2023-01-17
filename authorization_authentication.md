@@ -35,6 +35,21 @@ Submitting the modified request we solve the lab
 #### Lab
 This lab is vulnerable due to a logic flaw in its password brute-force protection. To solve the lab, brute-force the victim's password, then log in and access their account page.
 
+Trying to brute-force the login we can notice that after 3 failed attempts we are blocked for 1 minute, so a lock-out policy it is in place. Now it is quite common that the policy is based on the IP address of the incoming request. Poorly configured policy reset the failed counter attempts after a successfull login, we can try to verify this configuration using the following approach within a minute:
++ 2 failed login using carlos as username
++ a succefull login as user wiener
++ another failed attempt as user carlos
+The result is that we are not blocked, so we can try to brute-force the login using the following sequence:
++ login brute-force attempt 1
++ login brute-force attempt 2
++ successfull login user wiener credentials
++ login brute-force attempt 3
++ login brute-force attempt 4
++ successfull login user wiener credentials
++ ...
+and so on.
+
+
 #### References:
 + https://blog.intigriti.com/2022/03/01/hacker-tools-turbo-intruder/
 
