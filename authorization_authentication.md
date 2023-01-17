@@ -31,7 +31,7 @@ Submitting the modified request we solve the lab
 #### References:
 + https://portswigger.net/web-security/access-control
 
-### Broken brute-force protection, IP block
+### Broken brute-force protection with IP block
 #### Lab
 This lab is vulnerable due to a logic flaw in its password brute-force protection. To solve the lab, brute-force the victim's password, then log in and access their account page.
 
