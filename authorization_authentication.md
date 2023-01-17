@@ -48,7 +48,7 @@ The result is that we are not blocked, so we can try to brute-force the login us
 + successfull login user wiener credentials
 + ...
 
-and so on. To solve this lab I used Turbo Intruder exstension, you can get more information in the reference section about this toool. I created a custom list to feed Turbo intruder based on the passwords list provided: https://portswigger.net/web-security/authentication/auth-lab-passwords, that implements the sequence schema illustrated above. For your convinience 
+and so on. To solve this lab I used Turbo Intruder exstension, you can get more information in the reference section about this toool. I created a custom list to feed Turbo intruder based on the passwords list provided: https://portswigger.net/web-security/authentication/auth-lab-passwords, that implements the sequence schema illustrated above. You can download the customized list for Turbo Intrudere here
 
 
 
