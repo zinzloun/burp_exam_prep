@@ -31,6 +31,7 @@ Enjoy your learning trip!
 ### Authentication && Authorization
 + [OAuth account hijacking via redirect_uri](./authorization_authentication.md#oauth-account-hijacking-via-redirect_uri)
 + [Multi-step process with no access control on one step](./authorization_authentication.md#multi-step-process-with-no-access-control-on-one-step)
++ [Broken brute-force protection with IP block](./authorization_authentication.md#broken-brute-force-protection-with-ip-block)
 ### Click-jacking
 + [Multistep clickjacking](https://github.com/zinzloun/burp_exam_prep/blob/main/clickjacking.md#lab-multistep-clickjacking)
 ### File upload
