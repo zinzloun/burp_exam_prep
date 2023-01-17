@@ -45,4 +45,4 @@ Enjoy your learning trip!
 ### Path traversal
 + [File path traversal, traversal sequences stripped non-recursively](./path_traversal.md#file-path-traversal-traversal-sequences-stripped-non-recursively)
 ### Business logic vulnerabilities
-+ [Insufficient workflow validation]()
++ [Insufficient workflow validation](./BL_vulnerabilities.md#insufficient-workflow-validation)
