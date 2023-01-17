@@ -34,4 +34,9 @@ Cookie: session=0hRcKcZHLlsKBBHJcr5H4jHaLKJB4H9s
 ...
 Connection: close
 ```
+If we try to buy the Leather Jacket, since we don't have enough credit, we will get an error message:
+--90--
+But what happens if we try to submit the confirmation request once we have the jacket in the cart?
+--91--
+Since the confirmation step does not implement any additional controls on the price, related to the user funds the order is placed and the Lab is solved.
 #### References
