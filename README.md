@@ -46,3 +46,5 @@ Enjoy your learning trip!
 + [File path traversal, traversal sequences stripped non-recursively](./path_traversal.md#file-path-traversal-traversal-sequences-stripped-non-recursively)
 ### Business logic vulnerabilities
 + [Insufficient workflow validation](./BL_vulnerabilities.md#insufficient-workflow-validation)
+### Web socket
++ [Manipulating the WebSocket handshake to exploit vulnerabilities]()
