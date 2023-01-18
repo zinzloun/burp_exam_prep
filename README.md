@@ -49,3 +49,5 @@ Enjoy your learning trip!
 + [Insufficient workflow validation](./BL_vulnerabilities.md#insufficient-workflow-validation)
 ### Web socket
 + [Manipulating the WebSocket handshake to exploit vulnerabilities](./WS.md)
+### Web cache poisoning
++ [Web Cache poisoning using multiple headers](./web_cache_pois.md#web-cache-poisoning-with-multiple-headers)
