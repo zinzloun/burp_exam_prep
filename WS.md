@@ -7,7 +7,7 @@ As usual visit the Live chat web page to confirm that the communication take pla
 {"message":"ciao"}
 ```
 Send the request to the Repeater, changing the message value to the string <b>javascript</b> rise an error, so we know that there is some kind of protection, problably using a simple wordlist. Now that are IP is blocked we can try to evade the block using the <b>X-Forworded-For</b> header to fake our current IP, so click Reconnect (1), in the new window in the request insert the header with a dummy value (2), then click Connect (3)
---92--
+<br>![img](./img/92.png)<br>
 Then I tried another payload without 'javascript' word
 ```
 {"message":"<img src=1 onerror='alert(1)'>"}
