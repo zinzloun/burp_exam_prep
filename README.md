@@ -47,4 +47,4 @@ Enjoy your learning trip!
 ### Business logic vulnerabilities
 + [Insufficient workflow validation](./BL_vulnerabilities.md#insufficient-workflow-validation)
 ### Web socket
-+ [Manipulating the WebSocket handshake to exploit vulnerabilities]()
++ [Manipulating the WebSocket handshake to exploit vulnerabilities](./WS.md)
