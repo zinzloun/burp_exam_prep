@@ -43,5 +43,25 @@ We can retrive the administrator password in the source of the page
 ### DOM XSS using web messages and a JavaScript URL
 This lab demonstrates a DOM-based redirection vulnerability that is triggered by web messaging. To solve this lab, construct an HTML page on the exploit server that exploits this vulnerability and calls the print() function. 
 #### Lab
+Inspecting the source code of the lab home page we can see that the following JS code is present
+```
+<script>
+    window.addEventListener('message', function(e) {
+        var url = e.data;
+        if (url.indexOf('http:') > -1 || url.indexOf('https:') > -1) {
+            location.href = url;
+        }
+    }, false);
+</script>
+```
+Broadly a window object may obtain a reference to another (e.g., via targetWindow = window.opener), and then dispatch a MessageEvent on it with targetWindow.postMessage(). The receiving window is then free to handle this event as needed. The arguments passed to window.postMessage() (i.e., the "message") are exposed to the receiving window through the event object. But here the listener for dispatched message:
+```
+window.addEventListener('message', function(e)
+```
+does not implement any efficient security control, since the <b>origin</b> property is not checked and no verification of the received message syntax is implemented. Only a control on the message date is made on the presence of the http or https value, that does not prevent to inject JS command, e.g. the following message will bypass the control
+```
+alert(0);/*http*/
+```
 
 #### References
++ https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
