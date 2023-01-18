@@ -11,8 +11,6 @@ So now we can create our malicious payload and to be hosted on the exploit serve
 <br>![img](./img/42.png)<br>
 Now click Store (1) to save the payload, then you can verify your exploit (2), then to solve the lab delivery the payload to the victim (3)
 
-
-
 ### Exploiting cross-site scripting to capture passwords
 This is actually a funny and a challenging lab. Taking advantage of a XSS stored vulnerability we have to access the blog as administrator user. We know that the comment field is injectable, lets analyze the flow:
 <br>![img](./img/33.png)<br>
@@ -41,3 +39,9 @@ Lets create the malicious post comment:
 Just waiting a minute and then visiting the comments in the post id number 3 we can verify that our exploit worked:
 <br>![img](./img/37.png)<br>
 We can retrive the administrator password in the source of the page
+
+### DOM XSS using web messages and a JavaScript URL
+
+#### Lab
+
+#### References
