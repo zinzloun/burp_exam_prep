@@ -17,7 +17,7 @@ but even this time the attack was blocked and I hade to reconnect again using an
 {"message":"<img src='X' ONERROR=alert`1`>"}
 ```
 Here we use the <b>case change for the onerror event and the template literals for the alert funcion</b>. That permits to solve the lab
---93--
+<br>![img](./img/93.png)<br>
 #### References
 + https://portswigger.net/web-security/websockets
 + https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
