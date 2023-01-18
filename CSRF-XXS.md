@@ -60,8 +60,20 @@ window.addEventListener('message', function(e)
 ```
 does not implement any efficient security control, since the <b>origin</b> property is not checked and no verification of the received message syntax is implemented. Only a control on the message date is made on the presence of the http or https value, that does not prevent to inject JS command, e.g. the following message will bypass the control
 ```
-alert(0);/*http*/
+alert(0);/*http:*/
 ```
+In example above the http: string is inserted as a comment in JS so it is ignored, but the alert will be triggered. Knowing that we can proceed to craft our payload on the Exploit server:
+<br>![img](./img/94.png)<br>
+
+After haavig stored it (1), I tried to run (2) but I got a not found error. Reloding the exploit I can see that the message is not executed as JS:
+<br>![img](./img/95.png)<br>
+
+Let's try to add the javascript instructions before the print function as follows:
+```
+onload="this.contentWindow.postMessage('javascript:print();/*http:*/','*')"
+```
+The second argument, '*', specifies that any targetOrigin is allowed to send messages. Now store again the payload, view the exploit and the print window should appears, then deliver the exploit to the victim.
+
 
 #### References
 + https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
