@@ -41,7 +41,7 @@ Just waiting a minute and then visiting the comments in the post id number 3 we 
 We can retrive the administrator password in the source of the page
 
 ### DOM XSS using web messages and a JavaScript URL
-
+This lab demonstrates a DOM-based redirection vulnerability that is triggered by web messaging. To solve this lab, construct an HTML page on the exploit server that exploits this vulnerability and calls the print() function. 
 #### Lab
 
 #### References
