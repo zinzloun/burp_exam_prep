@@ -90,3 +90,4 @@ index 8944e3b..0000000
 ```
 Knowing the administrator password we can proceed to login and delete carlos
 #### References
++ https://githowto.com/git_internals_git_directory
