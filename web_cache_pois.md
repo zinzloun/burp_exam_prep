@@ -42,11 +42,14 @@ X-Forwarded-host: www.google.it
 x-forwarded-scheme: https
 ```
 In this case nothing happens and I got a 200 response. Indeed changing the protocol to http we get a redirect to the X-Forwarded-host value:
---97--
-Knowing that we can try to poison the server cache for the script <b>/resources/js/tracking.js</b> to poin to the exploit server, configured as follows
---98--
+<br>![img](./img/97.png)<br>
+
+Knowing that we can try to poison the server cache for the script <b>/resources/js/tracking.js</b> to poin to the exploit server (2), inserting the exploit (2). Click store (3) to save.
+<br>![img](./img/98.png)<br>
+
 Now modify in Repeater modify the request for the script as follows:
---99--
+<br>![img](./img/99.png)<br>
+
 Here the x-forwarded-host points to the exploit server that hosts the malicious script (1), setting the x-forwarded-scheme to http (2) will trigger the redirection to the malicious script URI (3). Keep submitting the request until you get <b>x-cache: hit</b> in the response (4), that means that the resources has been cached.
 
 Now reloading the home page you should get the alert pop-up, and the lab should be solved
