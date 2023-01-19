@@ -53,3 +53,5 @@ Enjoy your learning trip!
 + [Web Cache poisoning using multiple headers](./web_cache_pois.md#web-cache-poisoning-with-multiple-headers)
 ### Information disclosure
 + [Version control history](./info_disclosure.md#information-disclosure-in-version-control-history)
+### OS command injection
++ [Blind OS command injection with output redirection](./OS_cmd_injection.md#blind-os-command-injection-with-output-redirection)
