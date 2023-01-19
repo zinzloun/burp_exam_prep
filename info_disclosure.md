@@ -8,7 +8,8 @@ To follow the solution you will need to have installed:
 The lab discloses sensitive information via its version control history. To solve the lab, obtain the password for the administrator user then log in and delete Carlos's account.
 
 First of all let's to brute-force the application directories structure. To do that we can use Intruder. Set up the position in the request as follows (choose Sniper as attack)
---100--
+<br>![img](./img/100.png)<br>
+
 Then in the payload(1) set the type as Simple list (2) and the list of the sub directories to test (3, <i>please note that here I have used a limited wordlist to speed up the process</i>). Be sure to uncheck the URL encoding characters option (4) before to execute the attack.
 --101--
 After a while we can see that the <b>.git</b> has been found. 
