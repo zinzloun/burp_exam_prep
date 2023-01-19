@@ -51,3 +51,5 @@ Enjoy your learning trip!
 + [Manipulating the WebSocket handshake to exploit vulnerabilities](./WS.md)
 ### Web cache poisoning
 + [Web Cache poisoning using multiple headers](./web_cache_pois.md#web-cache-poisoning-with-multiple-headers)
+### Information disclosure
++ [Version control history](./info_disclosure.md#information-disclosure-in-version-control-history)
