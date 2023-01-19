@@ -7,13 +7,15 @@ To follow the solution you will need to have installed:
 #### Lab
 The lab discloses sensitive information via its version control history. To solve the lab, obtain the password for the administrator user then log in and delete Carlos's account.
 
-First of all let's to brute-force the application directories structure. To do that we can use Intruder. Set up the position in the request as follows (choose Sniper as attack)
+First of all let's to brute-force the application directories structure. To do that we can use Intruder. Set up the position (1) in the request as follows (choose Sniper as attack). The placeholder (3) will be replace with the values of our payload 
 <br>![img](./img/100.png)<br>
 
-Then in the payload(1) set the type as Simple list (2) and the list of the sub directories to test (3, <i>please note that here I have used a limited wordlist to speed up the process</i>). Be sure to uncheck the URL encoding characters option (4) before to execute the attack.
---101--
+Then in the payload(1) set the type as Simple list (2) and add the values for the sub directories to test (3, <i>please note that here I have used a limited wordlist to speed up the process</i>). Be sure to uncheck the URL encoding characters option (4) before to execute the attack.
+<br>![img](./img/101.png)<br>
+
 After a while we can see that the <b>.git</b> has been found. 
---102--
+<br>![img](./img/102.png)<br>
+
 Just to recall this folder contains all information that is necessary for the project and all information relating commits. It also contains a log that stores the commit history. This log can help you to roll back to the desired version of the code. Very interesting, first we have open a git CMD, then we can proceed to downlad the whole folder using wget:
 ```
 wget -r https://0aae000604fffb3fc15be60b0075004c.web-security-academy.net/.git
