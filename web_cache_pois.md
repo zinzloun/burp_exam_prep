@@ -4,7 +4,8 @@ The lab contains a web cache poisoning vulnerability that is only exploitable wh
 <b>Hints: The requests  supports both the X-Forwarded-Host and X-Forwarded-Scheme headers. </b>
 
 Inspecting the requests we can see that a JS script is used in the Home page:
---96--
+<br>![img](./img/96.png)<br>
+
 We could code an malicious version of this script to be delivered to the visitors to solve the lab, to do that of course first we have to find out if the application is vulnerable to cache poisoning. To automate the headers analysis I used the wonderful tool <b>Web-Cache-Vulnerability-Scanner</b> (more info in the [reference](#references) section). Executing the program as follows:
 ```
  .\wcvs.exe -u https://0acc009f04df6e15c5a378880089005a.web-security-academy.net -ppath .\BurpCer.pem -ot headers -hw '.\wordlists\lab'
