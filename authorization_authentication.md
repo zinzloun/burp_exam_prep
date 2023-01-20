@@ -77,7 +77,8 @@ This lab uses a JWT-based mechanism for handling sessions. It uses an extremely 
 You can log in to your own account using the following credentials: wiener:peter 
 
 Let's login as wiener user, going to the proxy histoty we can notice that, having the JWT editor installed, 3 tows are highlighted
---106--
+<br>![img](./img/106.png)<br>
+
 send the request to the account page to the Repeater. Passing to the JSON Web Token tab we can see out JWT decoded
 --107--
 Now being authenticated as wiener, tring to send the request to the admin panel, we can notice that the admin panel is only accessible by the administrators. 
