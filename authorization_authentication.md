@@ -114,5 +114,6 @@ Now sendig the following request to solve the Lab:
 
 #### References
 + https://portswigger.net/web-security/jwt
++ https://stackoverflow.com/questions/31309759/what-is-secret-key-for-jwt-based-authentication-and-how-to-generate-it
 + https://portswigger.net/web-security/jwt/working-with-jwts-in-burp-suite
 + https://hashcat.net/wiki/doku.php?id=hashcat
