@@ -68,3 +68,8 @@ In the result's table to find out if we succeed, we have to order the results fo
 #### References:
 + https://blog.intigriti.com/2022/03/01/hacker-tools-turbo-intruder/
 
+### JWT authentication bypass via weak signing key
+#### Lab
+#### References
++ https://portswigger.net/web-security/jwt
++ https://portswigger.net/web-security/jwt/working-with-jwts-in-burp-suite
