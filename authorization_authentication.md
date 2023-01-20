@@ -80,26 +80,33 @@ Let's login as wiener user, going to the proxy histoty we can notice that, havin
 <br>![img](./img/106.png)<br>
 
 send the request to the account page to the Repeater. Passing to the JSON Web Token tab we can see out JWT decoded
---107--
+<br>![img](./img/107.png)<br>
+
 Now being authenticated as wiener, tring to send the request to the admin panel, we can notice that the admin panel is only accessible by the administrators. 
---108--
+<br>![img](./img/108.png)<br>
+
 Knowing that the secret key is weak we can use hashcat to brute-force it. You can get the wordlist to use from [here](https://github.com/wallarm/jwt-secrets/blob/master/jwt.secrets.list). I used the following command:
 ```
 .\hashcat -m 16500 eyJraWQiOiJiMTNjZGEzMS02MDNlLTQ2MjQtYjc0MS0wYWU1ZDIxNTMxYmQiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsInN1YiI6IndpZW5lciIsImV4cCI6MTY3NDIyNjQxN30.T0XcbTnWQ1MWDn5ZcfU46AEU0i1K4Ta5yhuiCWby_lM "D:\wordlists\jwt.secrets.list.txt"
 ```
 The m switch value refers to the JWT token mode, fallowed by my JWT token value, the third parameter is the wordlist path file to use to brute-force the token. After some seconds the secret key is cracked:
---109--
+<br>![img](./img/109.png)<br>
+
 Now let's proceed to encode the secret in B64 format:
 ```
 c2VjcmV0MQ==
 ```
-Now let's proceed to generate a new symmetric key as follows:
---110--
-Select JWT editor keys (1), then New symmetric key (2), in the newly opened window click Generate (3), in the new generated key replace the value of the <b>k</b> property with the encoded value of the secret found in the previous step, then click OK (4). Now switch back to Repeater, in the JSON web token tab
---111--
-then modify the sub value as administrator (1), then click Sign (2), in the newly open window select the key that we have previously generated (3), then click Ok (4). Now notice that the hex value of the signature is changed (5).
-Now send back the request to the admin page using the modified token and we should be able to access the admin page
---112--
+Then we generate a new symmetric key as follows:
+select JWT editor keys (1), then New symmetric key (2), in the newly opened window click Generate (3), in the new generated key replace the value of the <b>k</b> property with the encoded value of the secret found in the previous step, then click OK (4). 
+<br>![img](./img/110.png)<br>
+
+Now switch back to Repeater, in the JSON web token tab
+, modify the sub value as administrator (1), then click Sign (2), in the newly open window select the key that we have previously generated (3), then click Ok (4). Now notice that the hex value of the signature is changed (5).
+<br>![img](./img/111.png)<br>
+
+Resend the request to the admin page using the modified token and we should be able to access the admin page
+<br>![img](./img/112.png)<br>
+
 Now sendig the following request to solve the Lab:
 ```
 /admin/delete?username=carlos
