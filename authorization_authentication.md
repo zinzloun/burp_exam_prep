@@ -71,10 +71,29 @@ In the result's table to find out if we succeed, we have to order the results fo
 ### JWT authentication bypass via weak signing key
 JWT attacks involve a user sending modified JWTs to the server in order to achieve a malicious goal. Typically, this goal is to bypass authentication and access controls by impersonating another user who has already been authenticated. 
 #### Lab
+<i>Please note that you have installed the JWT editor exstension to follow the solution</i>
 This lab uses a JWT-based mechanism for handling sessions. It uses an extremely weak secret key to both sign and verify tokens. This can be easily brute-forced. To solve the lab, first brute-force the website's secret key. Once you've obtained this, use it to sign a modified session token that gives you access to the admin panel at /admin, then delete the user carlos.
 
 You can log in to your own account using the following credentials: wiener:peter 
+
+Let's login as wiener user, going to the proxy histoty we can notice that, having the JWT editor installed, 3 tows are highlighted
+--106--
+send the request to the account page to the Repeater. Passing to the JSON Web Token tab we can see out JWT decoded
+--107--
+Now being authenticated as wiener, tring to send the request to the admin panel, we can notice that the admin panel is only accessible by the administrators. 
+--108--
+Knowing that the secret key is weak we can use hashcat to brute-force it. You can get the wordlist to use from [here](https://github.com/wallarm/jwt-secrets/blob/master/jwt.secrets.list). I used the following command:
+```
+.\hashcat -m 16500 eyJraWQiOiJiMTNjZGEzMS02MDNlLTQ2MjQtYjc0MS0wYWU1ZDIxNTMxYmQiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsInN1YiI6IndpZW5lciIsImV4cCI6MTY3NDIyNjQxN30.T0XcbTnWQ1MWDn5ZcfU46AEU0i1K4Ta5yhuiCWby_lM "D:\wordlists\jwt.secrets.list.txt"
+```
+The m switch value refers to the JWT token mode, fallowed by my JWT token value, the third parameter is the wordlist path file to use to brute-force the token. After some seconds the secret key is cracked:
+--109--
+Now let's proceed to encode the secret in B64 format:
+```
+c2VjcmV0MQ==
+```
+
 #### References
 + https://portswigger.net/web-security/jwt
 + https://portswigger.net/web-security/jwt/working-with-jwts-in-burp-suite
-+ https://jwt.io
++ https://hashcat.net/wiki/doku.php?id=hashcat
