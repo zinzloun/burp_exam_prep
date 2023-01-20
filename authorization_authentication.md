@@ -92,6 +92,11 @@ Now let's proceed to encode the secret in B64 format:
 ```
 c2VjcmV0MQ==
 ```
+Now let's proceed to generate a new symmetric key as follows:
+--110--
+Select JWT editor keys (1), then New symmetric key (2), in the newly opened window click Generate (3), in the new generated key replace the value of the <b>k</b> property with the encoded value of the secret found in the previous step, then click OK (4). Now switch back to Repeater, in the JSON web token tab
+--11--
+then modify the sub value as administrator (1), then click Sign (2), in the newly open window select the key that we have previously generated (3), then click Ok (4).
 
 #### References
 + https://portswigger.net/web-security/jwt
