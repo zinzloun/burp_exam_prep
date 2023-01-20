@@ -69,7 +69,12 @@ In the result's table to find out if we succeed, we have to order the results fo
 + https://blog.intigriti.com/2022/03/01/hacker-tools-turbo-intruder/
 
 ### JWT authentication bypass via weak signing key
+JWT attacks involve a user sending modified JWTs to the server in order to achieve a malicious goal. Typically, this goal is to bypass authentication and access controls by impersonating another user who has already been authenticated. 
 #### Lab
+This lab uses a JWT-based mechanism for handling sessions. It uses an extremely weak secret key to both sign and verify tokens. This can be easily brute-forced. To solve the lab, first brute-force the website's secret key. Once you've obtained this, use it to sign a modified session token that gives you access to the admin panel at /admin, then delete the user carlos.
+
+You can log in to your own account using the following credentials: wiener:peter 
 #### References
 + https://portswigger.net/web-security/jwt
 + https://portswigger.net/web-security/jwt/working-with-jwts-in-burp-suite
++ https://jwt.io
