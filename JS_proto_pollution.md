@@ -16,9 +16,13 @@ We can inspect the source of the storage.js to see the injection point
 --115--
 Now if we test (1) the attack vector we can see that it succeed
 --116--
-and the property is set to the object prototype with the relativa value
+and the property is set to the object prototype with the relativa value. Now we need to find a suitable gadget, again we can take advantage od DOM Incader to perform this operation. CLick on Scan for gadgets (1) as shown below:
+--117--
+A gadget is found: <b>hitCallback</b>, I was not able to reconstruct the vulnerability discover path, the only reference that I have found it's inside the ga.js file <b>resources/js/ga.js</b>
+
 
 
 #### References
 + https://portswigger.net/web-security/prototype-pollution/javascript-prototypes-and-inheritance
 + https://portswigger.net/web-security/prototype-pollution
++ https://portswigger.net/research/widespread-prototype-pollution-gadgets
