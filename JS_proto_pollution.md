@@ -14,7 +14,9 @@ Now reloading the home page and inspecting the DOM Invader TAB we can see that t
 --114--
 We can inspect the source of the storage.js to see the injection point
 --115--
-
+Now if we test (1) the attack vector we can see that it succeed
+--116--
+and the property is set to the object prototype with the relativa value
 
 
 #### References
