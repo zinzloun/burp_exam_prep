@@ -14,7 +14,7 @@ To solve the lab:
 1. Use the provided exploit server to deliver a payload to the victim that calls alert(document.cookie) in their browser
 
 First of all we have to enable Prototype pollution in the Attacker section in DOM Invader
---113--
+<br>![img](./img/113.png)<br>
 Now reloading the home page and inspecting the DOM Invader TAB we can see that the tool has found a pollution vector into the <b>location.hash property</b>
 --114--
 We can inspect the source of the storage.js to see the injection point
