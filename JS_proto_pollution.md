@@ -1,4 +1,9 @@
 ### Client-side prototype pollution in third-party libraries
+In order to perform a client side prototype pollution we need to meet the following conditions:
+- a way to poison the prototype, referred to as a prototype pollution source.
+- a way to use a poisoned prototype for an actual exploit, referred to as a prototype pollution gadget.
+
+<i>More information in the [refernces section](JS_proto_pollution.md#references)</i>
 #### Lab
  This lab is vulnerable to DOM XSS via client-side prototype pollution. This is due to a gadget in a third-party library, [BBQ](https://github.com/BlackFan/client-side-prototype-pollution/blob/master/pp/jquery-bbq.md), which is difficult to discover due to the minified source code. Although it's technically possible to solve this lab manually, it is recommend using DOM Invader as this will save you a considerable amount of time and effort.
 
