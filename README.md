@@ -19,6 +19,7 @@ Enjoy your learning trip!
 + [CSRF when token validation depends on request method](./CSRF-XXS.md#csrf-where-token-validation-depends-on-request-method)
 + [Exploiting cross-site scripting to capture passwords](./CSRF-XXS.md#exploiting-cross-site-scripting-to-capture-passwords)
 + [DOM XSS using web messages and a JavaScript URL](./CSRF-XXS.md#dom-xss-using-web-messages-and-a-javascript-url)
++ [Exploiting cross-site scripting to steal cookies](./CSRF-XXS.md#exploiting-cross-site-scripting-to-steal-cookies)
 ### SSRF
 + [SSRF with filter bypass via open redirection vulnerability](./SSRF.md#ssrf-with-filter-bypass-via-open-redirection-vulnerability)
 + [SSRF via flawed request parsing](./SSRF.md#ssrf-via-flawed-request-parsing)
