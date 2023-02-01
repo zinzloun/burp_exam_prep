@@ -11,6 +11,23 @@ So now we can create our malicious payload and to be hosted on the exploit serve
 <br>![img](./img/42.png)<br>
 Now click Store (1) to save the payload, then you can verify your exploit (2), then to solve the lab delivery the payload to the victim (3)
 
+### CSRF where token validation depends on token being present
+#### Lab
+The lab's email change functionality is vulnerable to CSRF.
+To solve the lab, use the exploit server to host an HTML page that uses a CSRF attack to change the viewer's email address.
+You can log in to your own account using the following credentials: wiener:peter 
+
+Once logged-in let's inspect the request to change the email address, we can notice that a CSRF token is present
+<br>![img](./img/154.png)<br>
+If we try to change the token's value of course we get an error:
+
+    Invalid CSRF token
+
+But if we completely remove the CSRF token parameter from the request we can see that the email is indeed updated. So we can craft the following CSRF payload to update the email without the need of the CSRF token:
+<br>![img](./img/155.png)<br>
+
+We create a simple form to post a request to change the email's user address without the CSRF token, then we submit the form. Save the payload (1), then if you View the exploit (being logged-in) you will see that your email is changed to pippo@disney.com. To solve the lab click Delivery the exploit to the victim (3)
+
 ### Exploiting cross-site scripting to capture passwords
 This is actually a funny and a challenging lab. Taking advantage of a XSS stored vulnerability we have to access the blog as administrator user. We know that the comment field is injectable, lets analyze the flow:
 <br>![img](./img/33.png)<br>
@@ -107,3 +124,26 @@ Setting the cookie found (<i>please note that the value is different since I had
 
 #### References
 + https://portswigger.net/web-security/cross-site-scripting/stored
+
+
+### DOM XSS in document.write sink using source location.search inside a select element
+
+#### Lab
+The lab contains a DOM-based cross-site scripting vulnerability in the stock checker functionality. It uses the JavaScript document.write function, which writes data out to the page. The document.write function is called with data from location.search which you can control using the website URL. The data is enclosed within a select element.
+
+To solve this lab, perform a cross-site scripting attack that breaks out of the select element and calls the alert function. 
+
+Let's inspect the source of the product page, we can see that a JS script is present, that if a <b>storeId parameter is present into the query string</b> the value is added to the select HTML object
+<br>![img](./img/151.png)<br>
+Let's verify if the it works:
+<br>![img](./img/152.png)<br>
+Then let's try to verify if the parameter is vulnerable to XSS using the following value as storedId:
+
+    storeId=<%2foption><%2fselect>xxx
+
+The HTML code in injected:
+<br>![img](./img/153.png)<br>
+
+Our final payload will be the following
+    
+    storeId=%3c%2foption%3e%3c%2fselect%3e%3cscript%3ealert(0)%3b%3c%2fscript%3e
