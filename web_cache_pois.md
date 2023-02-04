@@ -1,3 +1,4 @@
+
 ### Web cache poisoning with multiple headers
 #### Lab
 The lab contains a web cache poisoning vulnerability that is only exploitable when you use multiple headers to craft a malicious request. A user visits the home page roughly once a minute. To solve this lab, poison the cache with a response that executes alert(document.cookie) in the visitor's browser.
@@ -57,3 +58,43 @@ Now reloading the home page you should get the alert pop-up, and the lab should 
 #### References
 + https://portswigger.net/web-security/web-cache-poisoning
 + https://github.com/Hackmanit/Web-Cache-Vulnerability-Scanner
+
+### Parameter cloaking
+What is parameter cloaking? A web cache poisoning vector called through which an attacker can separate query parameters using a semicolon <b>;</b>, that can cause a difference in the interpretation of the request between the proxy (running with default configuration) and the server. This can result in malicious requests being cached as completely safe ones, as the proxy would usually not see the semicolon as a separator, and therefore would not include it in a cache key of an unkeyed parameter.
+#### Lab
+The  lab is vulnerable to web cache poisoning because it excludes a certain parameter from the cache key. There is also inconsistent parameter parsing between the cache and the back-end. A user regularly visits this site's home page using Chrome.
+To solve the lab, use the parameter cloaking technique to poison the cache with a response that executes alert(1) in the victim's browser. 
+
+<i>Please note that I was not able to solve the Lab by my own, so I hade to follow the solution provided. In this Lab I used the Param miner exstension, also the Lab Id will change during the solution's explanation</i>
+
+First of all we have to identify the request to the js file, then send it to Repeater. Here we can see that the callback parameter value (1) is reflected into the response, and then it is cached (2).
+<br>![img](./img/165.png)<br>
+Changing the parameter's value and we can see that it is reflected into the response, and again the request is cached, but we can't poison the cache for other users in this way because the parameter is keyed. That's confirmed reloading the home that includes the original script's request (1)
+<br>![img](./img/166.png)<br>
+That's a normal behaviour since the query string parameter takes part into forming the key cache value.
+
+Since we know that we can exploi the application using parameter cloaking as indicated, we need to find a suitable unkeyed parameter. Let's proceed using the Param miner exstension as shown (1):
+<br>![img](./img/167.png)<br>
+It ok in the config windows and proceed to test the applications. After a while looking at the output we can see that an unkeyed parameter has been founf
+```
+Found issue: Web Cache Poisoning: Parameter Cloaking
+Target: https://0a840034036a705dc1a5fdc100090017.web-security-academy.net
+The application can be manipulated into excluding the callback parameter from the cache key, by disguising it as utm_content. <br>For further information on this technique, please refer to https://portswigger.net/research/web-cache-entanglement
+Evidence: 
+======================================
+GET /js/geolocate.js?callback=setCountryCookie&utm_content=x;callback=akzldka&g93s8=1 HTTP/1.1
+```
+If we execute the payload from Reapeater we can see that now we are able to cache the callback parameter with our malicious payload (send the request until you hit the cache). As we can see now the last callback parameter, after the utm_content parameter separated by a semicolon, it is excluded from the cache key but it is used by the server to overwrite the callback function in the response:
+<br>![img](./img/167.png)<br>
+Change the GET request has follows (remember to hit the cache again) and we can solve the lab
+
+    GET /js/geolocate.js?callback=setCountryCookie&utm_content=x;callback=alert(1)
+
+
+
+
+
+#### References
++ https://www.radware.com/cyberpedia/application-security/parameter-cloaking
++ https://portswigger.net/web-security/web-cache-poisoning/exploiting-implementation-flaws
++ https://blog.detectify.com/2020/07/28/do-you-trust-your-cache-web-cache-poisoning-explained/

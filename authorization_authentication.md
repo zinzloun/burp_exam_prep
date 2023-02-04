@@ -113,7 +113,7 @@ Victim's username: carlos
 
 First of all log-in using wiener credentials, check the option to <b>Stay logge in</b>, inspect the request for the <b>my-account page</b> you will notice that a cookie <b>stay-logged-in</b> is set, the value is encoded in Base64, using Inspector we can infer that could be in the form of username:encoded_password, the username is in plain text. 
 <br>![img](./img/129.png)<br>
-The I used a <b>Python script, hash-id</b>, to try to guess the encoding form, that could md5.
+The I used a Python script, [hash-id](/file/hash-id.py), to try to guess the encoding form, that could md5.
 <br>![img](./img/130.png)<br>
 Knowing that we can think to brute-force the password for the user carlos, setting the cookie vakue according. The process that I followed was: 
 - create a wordlist containing the payloads  <b>b64(carlos:md5(password))</b>, the password value are taken from the provided password wordlist
@@ -176,3 +176,61 @@ Now sendig the following request to solve the Lab:
 + https://stackoverflow.com/questions/31309759/what-is-secret-key-for-jwt-based-authentication-and-how-to-generate-it
 + https://portswigger.net/web-security/jwt/working-with-jwts-in-burp-suite
 + https://hashcat.net/wiki/doku.php?id=hashcat
+
+### JWT authentication bypass via kid header path traversal
+The JWT header kid (Key ID) provides an ID that servers can use to identify the correct key in cases where there are multiple keys to choose from. Depending on the format of the key, this may have a matching kid parameter. 
+#### Lab
+The lab uses a JWT-based mechanism for handling sessions. In order to verify the signature, the server uses the kid parameter in JWT header to fetch the relevant key from its filesystem.
+
+To solve the lab, we have to forge a JWT that gives you access to the admin panel at /admin, then delete the user carlos.
+
+You can log in to your own account using the following credentials: wiener:peter.
+
+<i>To solve the lab you need to install <b>JWT editor keys exstension</b>, note that my lab ID (and session) could change during the current explanation</i>
+
+Let's login and then try to access the admin page, we can see that a JWT is used to grent access to the admin page, we can inspect it opening the correspondig tab (1). Notice the presence of the kid's header (2)
+ <br>![img](./img/169.png)<br>
+We can test if the parameter is vulnerable to directory traversal, the we wiil force the server to use an arbitrary file from its filesystem as the verification key, one of the simplest methods is to use <b>/dev/null file</b>, which is present on most Linux systems. As this is an empty file, reading it returns an empty string. Therefore, <b>signing the token with a empty string will result in a valid signature</b>. In windows the <b>nul file</b> has almost the same function of /dev/null (e.g. echo 1 > nul). To try to exploit this vulnerability we also need the token to be signed using a <b>symmetric algorithm: HS256</b>. From the above image (3) we can see that even this condition is met.
+
+Now let's proceed to create the symmetric signing key (2) using the JWT keys editor (1). Set the value of the <b>k property with a Base64-encoded null byte (3), AA==</b>, because the JWT Editor extension won't allow to sign tokens using an empty string. 
+ <br>![img](./img/170.png)<br>
+The new key is generated and we can use to sign our malicious JWT. Go back to Repeater JWT (1) and modify the JWT in the admin request as follows:
+<br>![img](./img/171.png)
+2 change the kid value to /dev/null
+3 change the sub value to administrator
+4 sign the modified token using the generated key in the previous step
+5 click OK in the select key window
+
+Now if we send the request for the admin page again we get 401, probably this is due to the incorrect setting of the /dev/null file path, we need to escape from the current directory, so after some try and errors I found tha we need seven escape, so the corret value the kid header is
+
+     "kid": "../../../../../../../dev/null"
+
+Change the value according, re-sign the modification and send it to the server, then you should be able to access the admin panel. Find the URI in the response to delete the user carlos and send a GET request to the endpoint, or change the session JWT cookie value with the one we crafted in the current browser session to click the link using the WebUI.
+
+
+#### References
+- https://portswigger.net/web-security/jwt
+
+### 2FA broken logic
+#### Lab
+ The lab's two-factor authentication is vulnerable due to its flawed logic. To solve the lab, access Carlos's account page.
+
++ Your credentials: wiener:peter
++ Victim's username: carlos
+
+We also have access to the email server to receive your 2FA verification code. 
+
+Log-in as wiener and we are redirected to the <b>login2 page</b> where the MFA code is required, here we can notice that the a cookie called verify (1) is set with the username of the one is trying to authenticate. Check you email client and you will get the MFA code, that is sent to the server with the <b>mfa-code parameter</b> (2).
+ <br>![img](./img/161.png)<br>
+ <i>Please note that from now on my Lab ID is changed.</i>
+Now we can try to exploi the authentication logic since the POST login2 request associates the MFA to the user using the cookie verify only, without considering the previous authentication step using password. Performing multiple request for the MFA we can infer that the code is a permutation of the decimal number system (0-9), having a max length=4.
+
+Knowing that we can try to brute-force this value for carlos user, we can proceed as follows:
+1. Log-out from the wiener account
+2. Perfor a GET request to the login2 page and send it to Repeater, change the verify cookie value to carlos (1)  <br>![img](./img/162.png)
+3. Send the request so a MFA code will be generated for carlos
+4. Log-in again as wiener, then in the login2 page submitt an invalid MFA token (e.g aaaa)
+5. Send the POST login2 request to Turbo Intruder and configure the attack as follows <br>![img](./img/163.png)<br>
+Change the verify cookie value to carlos (1), set the placeholder attack parameter for mfa-code (3). Using intertools python 3 module we can easely generate a list to brute-force the MFA code value (3). You can download the Turbo Intruder python code from [here](./file/TI_mfa_bf.py).
+6. Lunch the attack, after a while you should get the entry in the results table (1) with the response status equals to 302 (2), that means we got a <b>valid redirect to my-account page</b> using the indicated MFA code (3)<br>![img](./img/164.png)
+7. Right-click into the request body and choose <b>Show response in browser</b> (4), copy the provided link in your browser's address bar and you should access as carlos user 

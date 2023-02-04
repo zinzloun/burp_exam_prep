@@ -28,6 +28,8 @@ Enjoy your learning trip!
 + [SSRF with filter bypass via open redirection vulnerability](./SSRF.md#ssrf-with-filter-bypass-via-open-redirection-vulnerability)
 + [SSRF via flawed request parsing](./SSRF.md#ssrf-via-flawed-request-parsing)
 + [SSRF with blacklist-based input filter](./SSRF.md#ssrf-with-blacklist-based-input-filter)
++ [SSRF via OpenID dynamic client registration](./SSRF.md#ssrf-via-openid-dynamic-client-registration)
+
 ### SQLi
 + [SQL injection attack, querying the database type and version on MySQL and Microsoft](./SqlI.md#sql-injection-attack-querying-the-database-type-and-version-on-mysql-and-microsoft)
 + [SQL injection attack, listing the database contents on non-Oracle databases](./SqlI.md#sql-injection-attack-listing-the-database-contents-on-non-oracle-databases)
@@ -46,6 +48,9 @@ Enjoy your learning trip!
 + [JWT authentication bypass via weak signing-key](./authorization_authentication.md#jwt-authentication-bypass-via-weak-signing-key)
 + [Forced OAuth profile linking](./authorization_authentication.md#forced-oauth-profile-linking)
 + [Brute-forcing a stay-logged-in cookie](authorization_authentication.md#brute-forcing-a-stay-logged-in-cookie)
++ [2FA broken logic](./authorization_authentication.md#2fa-broken-logic)
++ [JWT authentication bypass via kid header path traversal](./authorization_authentication.md#jwt-authentication-bypass-via-kid-header-path-traversal)
+
 ### Click-jacking
 + [Multistep clickjacking](https://github.com/zinzloun/burp_exam_prep/blob/main/clickjacking.md#lab-multistep-clickjacking)
 ### File upload
@@ -65,6 +70,7 @@ Enjoy your learning trip!
 + [Manipulating the WebSocket handshake to exploit vulnerabilities](./WS.md)
 ### Web cache poisoning
 + [Web Cache poisoning using multiple headers](./web_cache_pois.md#web-cache-poisoning-with-multiple-headers)
++ [Parameter cloaking](./web_cache_pois.md#parameter-cloaking)
 ### Information disclosure
 + [Version control history](./info_disclosure.md#information-disclosure-in-version-control-history)
 ### OS command injection
