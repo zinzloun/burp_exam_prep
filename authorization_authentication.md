@@ -1,17 +1,38 @@
 ### OAuth account hijacking via redirect_uri
+#### Lab
+The lab uses an OAuth service to allow users to log in with their social media account. A misconfiguration by the OAuth provider makes it possible for an attacker to steal authorization codes associated with other users' accounts.
+
+To solve the lab, we have to steal an authorization code associated with the admin user, then use it to access their account and delete Carlos.
+
+The admin user will open anything you send from the exploit server and they always have an active session with the OAuth service.
+
+You can log in with your own social media account using the following credentials: wiener:peter. 
+
 <b>Workflow</b><br/>
-Login to the portal using OAuth -> OAuth server authentication (yes) -> Portal (authenticated)  with auth code in the QS
+Login to the portal using wiener social media profile, then log-out and click my account again, you will notice that you don't need to insert wiener credentials again, you can directly continue to the home page. Inspect the flow, you can notice the request containing the <b>auth code in the query string.</b>
+
+Send the request to Repeater, trying to modify the <b>redirect_uri parameter</b> to poin to the exploit server and we don't get any error in the response. This parameter is used to generate the redirect, and we can control it. Follow the redirect (1)  
 <br>![img](./img/5.png)<br>
-In the repeater since we are already authenticated, we can see the cookie session already set
+You will land to the exploit server home page.
 <br>![img](./img/6.png)<br>
-We can modify the redirect_uri parameter without get any error. The parameter is used to generate the redirect
-<br>![img](./img/7.png)<br>
-Now redirect the request to our payload hosted into the exploit server
-<br>![img](./img/8.png)<br>
-After delivered to the victim the payload, we can inspect the exploit access log to get the leaked auth code:
+If you access the exploit log server page you will find the entry associated to the previous request (1).
+
+We can take advantage of this vulnerability to craft a payload to get the administrator credential, to do that change the <b>redirect_uri</b> to point to the exploit server (2), then we use our client_id (1) and the other needed paramters (3, 4) to complete the OpenID Connect Flows
+<br>![img](./img/8.png).<br>
+Note that if the value of <b>response_type is code</b>, but <b>openid is not included in the scope request parameter</b>, the request is just an authorization code flow. On the other hand, if openid is included in the scope request parameter, an <b>ID token is issued from the token endpoint</b> in addition to an access token.
+Save the payload (5), if you view it (6), you will notice in the access log (8) that an entry is present with a new code token for the current user.
+Not that here the authentication flows <b>miss to semantic validate the client_id parameters</b>, since we are providing our own to get the authorization code for a different user.
+
+After delivered to the victim the payload (7), we can inspect the exploit access log (8) to get the leaked code:
 <br>![img](./img/9.png)<br>
-Now we can use the code to access the portal bypassing the authentication process:
-https://YOUR-LABID.web-security-academy.net/oauth-callback?code=T2QW7SXUMEHWY_bpSSTnNucJRfhWhQRtbj2GQpqAINC
+Now we can use the code's value to access the portal, bypassing the authentication process:
+     
+     https://YOUR-LABID.web-security-academy.net/oauth-callback?code=T2QW7SXUMEHWY_bpSSTnNucJRfhWhQRtbj2GQpqAINC
+
+#### References
+- https://darutk.medium.com/diagrams-of-all-the-openid-connect-flows-6968e3990660
+- https://www.oauth.com/oauth2-servers/client-registration/client-id-secret/
+- https://developer.okta.com/blog/2018/04/10/oauth-authorization-code-grant-type
 
 ### Forced OAuth profile linking
 #### Lab

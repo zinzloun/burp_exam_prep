@@ -17,6 +17,8 @@ Enjoy your learning trip!
 ## Summary
 ### Cors
 + [Vulnerability with trusted insecure protocols](./CORS.md#cors-vulnerability-with-trusted-insecure-protocols)
++ [CORS vulnerability with trusted null origin](./CORS.md#cors-vulnerability-with-trusted-null-origin)
+
 ### CSRF, XSS
 + [CSRF when token validation depends on request method](./CSRF-XXS.md#csrf-where-token-validation-depends-on-request-method)
 + [CSRF where token validation depends on token being present](CSRF-XXS.md#csrf-where-token-validation-depends-on-request-method)
