@@ -21,7 +21,8 @@ We can take advantage of this vulnerability to craft a payload to get the admini
 <br>![img](./img/8.png).<br>
 Note that if the value of <b>response_type is code</b>, but <b>openid is not included in the scope request parameter</b>, the request is just an authorization code flow. On the other hand, if openid is included in the scope request parameter, an <b>ID token is issued from the token endpoint</b> in addition to an access token.
 Save the payload (5), if you view it (6), you will notice in the access log (8) that an entry is present with a new code token for the current user.
-Not that here the authentication flows <b>miss to semantic validate the client_id parameters</b>, since we are providing our own to get the authorization code for a different user.
+Not that here
+ the authentication flows <b>miss to semantic validate the client_id parameters</b>, since we are providing our own to get the authorization code for a different user.
 
 After delivered to the victim the payload (7), we can inspect the exploit access log (8) to get the leaked code:
 <br>![img](./img/9.png)<br>
