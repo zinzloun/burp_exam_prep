@@ -14,7 +14,18 @@ Finally I suggest to have a look at the following resource: https://portswigger.
 
 Enjoy your learning trip!
 
-## Summary
+## Tools
+Befroe starting follows a list of useful tool (apart Burp CE) that you should have in your arsenal to perfotm web app PT
+
+- [Turbo intruder](https://github.com/PortSwigger/turbo-intruder)
+- [Ffuf](https://github.com/ffuf/ffuf)
+- [Web cache vulnerability scanner](https://github.com/Hackmanit/Web-Cache-Vulnerability-Scanner/releases)
+- [Nikto](https://github.com/sullo/nikto)
+- [Wappalyzer browser plugin](https://www.wappalyzer.com/)
+- [Netcraft exstension](https://www.netcraft.com/apps/)
+- [Nmap](https://nmap.org/) of course...
+- [Whatweb](https://github.com/urbanadventurer/WhatWeb)
+
 ### Cors
 + [Vulnerability with trusted insecure protocols](./CORS.md#cors-vulnerability-with-trusted-insecure-protocols)
 + [CORS vulnerability with trusted null origin](./CORS.md#cors-vulnerability-with-trusted-null-origin)
