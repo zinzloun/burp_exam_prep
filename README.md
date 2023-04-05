@@ -63,6 +63,8 @@ Befroe starting follows a list of useful tool (apart Burp CE) that you should ha
 + [Brute-forcing a stay-logged-in cookie](authorization_authentication.md#brute-forcing-a-stay-logged-in-cookie)
 + [2FA broken logic](./authorization_authentication.md#2fa-broken-logic)
 + [JWT authentication bypass via kid header path traversal](./authorization_authentication.md#jwt-authentication-bypass-via-kid-header-path-traversal)
++ [Predicatble session tokens generation](./authorization_authentication.md#predicatble-session-tokens-generation)
++ [CBC bit flipping attack](./authorization_authentication.md#cbc-bit-flipping-attack)
 
 ### Click-jacking
 + [Multistep clickjacking](https://github.com/zinzloun/burp_exam_prep/blob/main/clickjacking.md#lab-multistep-clickjacking)
