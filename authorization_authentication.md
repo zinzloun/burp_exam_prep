@@ -446,7 +446,7 @@ So we have the following value for the iv parameter to get the root user ID 00 (
 Comparing to the original request
     
     6b c2 4f c1 [ab] 65 0b {25} b4 11 4e 93 a9 8f 1e ba
- we can notice that in the original request the changed byte is at the five position, in square brackets 
+ we can notice that in the original request the changed byte is at the fifth position, in square brackets 
 
  Morevore to obtain the root group ID 00 we need to change the byte at the position 8, in curly brackets
 
