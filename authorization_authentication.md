@@ -461,7 +461,7 @@ In this case change only 2 bytes is not enough to solve the lab, indeed we need 
 <i>Please change the protocol to HTTP from now on, since Turbo Intruder will raise an error related to che TLS certificate using https.</i>
 If we lunch again the bit flipping attack in Burp (or just play a bit around with the bytes at 5 and 8 positions) we can find that the following iv value 6bc24fc1<b>aa</b>650b<b>27</b>b4114e93a98f1eba produces User ID 074 and Group ID 035. Now to solve the lab we need to find others 4 bytes, 2 for the user ID and 2 for the group ID. The schema is the following:
 
-    6b c2 4f c1 aa [? ?] 27 {? 1?} 4e 93 a9 8f 1e ba 
+    6b c2 4f c1 aa [?? ??] 27 {?? ??} 4e 93 a9 8f 1e ba 
 As told before we will use Turbo intruder to brute-force the bytes, we will complete the task in 2 steps, the first is to find the 2 bytes for the user ID and then to proceed to find the others 2 bytes for the group ID. In Turbo Intruder we will set the placeholder in the iv parameter as follows:
 
     6bc24fc1aa%s27b4114e93a98f1eba 
